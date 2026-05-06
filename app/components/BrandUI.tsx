@@ -6,8 +6,8 @@ import React, { useEffect, useState } from "react";
 export const BrandStyles = `
   /* ── INPUTS ─────────────────────────────────────────────────── */
   .maple-input {
-    background: #18181b;
-    border: 1px solid #2e2e33;
+    background: #111114;
+    border: 1px solid #3f3f46;
     color: #ffffff;
     border-radius: 8px;
     padding: 0 12px;
@@ -21,8 +21,8 @@ export const BrandStyles = `
   .maple-input:hover:not(:disabled) { border-color: #4a4a54; }
   .maple-input:focus {
     outline: none;
-    border-color: #8a3535;
-    box-shadow: 0 0 0 3px rgba(99,42,42,0.12);
+    border-color: #4a4a54;
+    box-shadow: 0 0 0 3px rgba(138,53,53,0.15);
   }
   .maple-input::placeholder { color: #555560; }
   .maple-input:disabled { opacity: 0.38; cursor: not-allowed; }
@@ -298,7 +298,8 @@ export const BrandStyles = `
   /* ── TABLE ───────────────────────────────────────────────────── */
   .maple-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 8px;
     font-size: 13px;
     font-family: var(--font-outfit), system-ui, sans-serif;
   }
@@ -309,9 +310,10 @@ export const BrandStyles = `
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.11em;
-    color: #555560;
-    background: #111114;
-    border-bottom: 1px solid #1e1e23;
+    color: #7c7c8e;
+    background: transparent;
+    padding: 0 16px 12px;
+    border-bottom: 1px solid #2e2e33;
   }
   .maple-table td {
     padding: 24px 16px;

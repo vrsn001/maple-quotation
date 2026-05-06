@@ -62,9 +62,9 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
               <div style={{ color: '#666' }}>{data.client.phone}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '8px', color: '#999', textTransform: 'uppercase', marginBottom: '4px' }}>Ref No.</div>
-              <div style={{ fontWeight: 700 }}>{data.quote.number}</div>
-              <div style={{ color: '#666' }}>{data.quote.date}</div>
+              <div style={{ fontSize: '9px', color: '#999', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Ref No.</div>
+              <div style={{ fontWeight: 800, fontSize: '12px' }}>{data.quote.number}</div>
+              <div style={{ color: '#666', fontSize: '10px', marginTop: '2px' }}>{data.quote.date}</div>
             </div>
           </div>
 
@@ -82,7 +82,7 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
                       <div style={{ color: '#666', fontSize: '9px' }}>{item.description}</div>
                       <div style={{ color: '#999', fontSize: '8px' }}>Qty: {item.quantity} × ₹{item.price?.toLocaleString()}</div>
                     </div>
-                    <div style={{ fontWeight: 700, color: '#8a3535' }}>₹{total.toLocaleString()}</div>
+                    <div style={{ fontWeight: 800, color: '#8a3535', fontSize: '13px' }}>₹{total.toLocaleString()}</div>
                   </div>
                 );
               })}
@@ -99,9 +99,9 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
           </div>
 
           {terms.length > 0 && (
-            <div style={{ marginTop: '16px', padding: '10px', background: '#fafafa', borderRadius: '4px' }}>
-              <div style={{ fontWeight: 700, fontSize: '9px', textTransform: 'uppercase', marginBottom: '6px', color: '#8a3535' }}>Terms & Conditions</div>
-              {terms.map((t, i) => <div key={i} style={{ fontSize: '8px', color: '#555', marginBottom: '3px' }}>{i + 1}. {t}</div>)}
+            <div style={{ marginTop: '20px', padding: '12px', background: '#f8f8f8', borderRadius: '6px', border: '1px solid #eee' }}>
+              <div style={{ fontWeight: 800, fontSize: '10px', textTransform: 'uppercase', marginBottom: '8px', color: '#8a3535', letterSpacing: '0.05em' }}>Terms & Conditions</div>
+              {terms.map((t, i) => <div key={i} style={{ fontSize: '9px', color: '#444', marginBottom: '5px', lineHeight: '1.4' }}>{i + 1}. {t}</div>)}
             </div>
           )}
         </div>
@@ -749,48 +749,54 @@ function QuotationBuilderContent() {
                                 </div>
                               </div>
                             </td>
-                            <td>
-                                <div className="space-y-4 pr-4">
-                                  <div className="grid grid-cols-2 gap-3">
-                                    <TextInput placeholder="Material" className="!h-9 !text-[11px]" value={item.material} onChange={(e) => updateItem(rIdx, iIdx, { material: e.target.value })} />
-                                    <TextInput placeholder="Fabric" className="!h-9 !text-[11px]" value={item.fabric} onChange={(e) => updateItem(rIdx, iIdx, { fabric: e.target.value })} />
+                             <td>
+                                <div className="space-y-4 pr-6 min-w-[200px]">
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div className="space-y-1">
+                                      <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Material</span>
+                                      <TextInput placeholder="Material..." className="!h-8 !text-[11px]" value={item.material} onChange={(e) => updateItem(rIdx, iIdx, { material: e.target.value })} />
+                                    </div>
+                                    <div className="space-y-1">
+                                      <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Fabric</span>
+                                      <TextInput placeholder="Fabric..." className="!h-8 !text-[11px]" value={item.fabric} onChange={(e) => updateItem(rIdx, iIdx, { fabric: e.target.value })} />
+                                    </div>
                                   </div>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-bold text-[#7c7c8e] uppercase whitespace-nowrap">Size (L×W×H)</span>
-                                    <div className="flex gap-1.5 flex-1">
+                                  <div className="flex items-center gap-3 bg-[#18181b] p-2 rounded-lg border border-[#2e2e33]">
+                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase whitespace-nowrap">Size (L×W×H)</span>
+                                    <div className="flex gap-1 flex-1">
                                       {(['l', 'w', 'h'] as Array<keyof NonNullable<QuoteItem['dimensions']>>).map(d => (
-                                        <NumberInput key={d} placeholder={d.toUpperCase()} className="!h-8 !text-[10px] !px-0 text-center flex-1" value={item.dimensions?.[d]} onChange={(e) => updateItem(rIdx, iIdx, { dimensions: { ...item.dimensions!, [d]: toNumber(e.target.value) } })} />
+                                        <NumberInput key={d} placeholder={d.toUpperCase()} className="!h-7 !text-[10px] !px-1 text-center flex-1 !bg-[#0d0d0f]" value={item.dimensions?.[d]} onChange={(e) => updateItem(rIdx, iIdx, { dimensions: { ...item.dimensions!, [d]: toNumber(e.target.value) } })} />
                                       ))}
                                     </div>
                                   </div>
                                 </div>
                               </td>
                               <td>
-                                <div className="grid grid-cols-2 gap-3 pr-4">
-                                  <div className="space-y-1">
-                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Rate</span>
-                                    <NumberInput className="!h-9 !font-bold" value={item.price} onChange={(e) => updateItem(rIdx, iIdx, { price: toNumber(e.target.value) })} />
+                                <div className="flex items-end gap-3 pr-6">
+                                  <div className="space-y-1 w-24">
+                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Unit Rate</span>
+                                    <NumberInput className="!h-10 !text-[14px] !font-bold" value={item.price} onChange={(e) => updateItem(rIdx, iIdx, { price: toNumber(e.target.value) })} />
                                   </div>
-                                  <div className="space-y-1">
+                                  <div className="space-y-1 w-20">
                                     <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Type</span>
-                                    <Select className="!h-9 !text-[11px]" value={item.unitType} onChange={(e) => updateItem(rIdx, iIdx, { unitType: e.target.value as UnitType })}>
+                                    <Select className="!h-10 !text-[11px]" value={item.unitType} onChange={(e) => updateItem(rIdx, iIdx, { unitType: e.target.value as UnitType })}>
                                       <option value="nos">NOS</option><option value="set">SET</option><option value="sqft">SQFT</option><option value="rft">RFT</option>
                                     </Select>
                                   </div>
-                                  <div className="space-y-1">
+                                  <div className="space-y-1 w-16">
                                     <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">U.Val</span>
-                                    <NumberInput className="!h-9" value={item.unitValue} onChange={(e) => updateItem(rIdx, iIdx, { unitValue: toNumber(e.target.value) })} />
+                                    <NumberInput className="!h-10" value={item.unitValue} onChange={(e) => updateItem(rIdx, iIdx, { unitValue: toNumber(e.target.value) })} />
                                   </div>
-                                  <div className="space-y-1">
+                                  <div className="space-y-1 w-16">
                                     <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Qty</span>
-                                    <NumberInput className="!h-9" value={item.quantity} onChange={(e) => updateItem(rIdx, iIdx, { quantity: toNumber(e.target.value) })} />
+                                    <NumberInput className="!h-10" value={item.quantity} onChange={(e) => updateItem(rIdx, iIdx, { quantity: toNumber(e.target.value) })} />
                                   </div>
                                 </div>
                               </td>
-                            <td className="text-right">
-                              <div className="text-[14px] font-bold text-[var(--text)] tabular-nums">{money((item.price || 0) * (item.unitValue || 1) * (item.quantity || 1))}</div>
-                              <button onClick={() => deleteItem(rIdx, iIdx)} className="text-[10px] text-[var(--red)] font-bold uppercase mt-6 opacity-0 group-hover:opacity-100 transition-base hover:underline">Remove</button>
-                            </td>
+                              <td className="text-right align-bottom pb-8">
+                                <div className="text-[16px] font-black text-[#ffffff] tabular-nums mb-2">{money((item.price || 0) * (item.unitValue || 1) * (item.quantity || 1))}</div>
+                                <button onClick={() => deleteItem(rIdx, iIdx)} className="text-[10px] text-[#f04747] font-bold uppercase hover:underline transition-base">Remove Item</button>
+                              </td>
                           </tr>
                         ))}
                       </tbody>
