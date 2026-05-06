@@ -326,27 +326,62 @@ function QuotationBuilderContent() {
   async function onImportExcel(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    const JSZip = (await import("jszip")).default;
     const reader = new FileReader();
-    reader.onload = (evt) => {
+
+    reader.onload = async (evt) => {
       try {
         const bstr = evt.target?.result;
+        if (!bstr) return;
+
+        // 1. Extract Data Rows using XLSX
         const wb = XLSX.read(bstr, { type: "binary" });
         const ws = wb.Sheets[wb.SheetNames[0]];
         const rows = XLSX.utils.sheet_to_json(ws) as Record<string, string | number>[];
+
+        // 2. Extract Images using JSZip
+        const zip = await JSZip.loadAsync(file);
+        const mediaFolder = zip.folder("xl/media");
+        const images: string[] = [];
+
+        if (mediaFolder) {
+          const mediaFiles = Object.keys(mediaFolder.files).sort((a, b) => {
+            // Sort by number in filename (image1.png, image2.png...)
+            const numA = parseInt(a.match(/\d+/)?.[0] || "0");
+            const numB = parseInt(b.match(/\d+/)?.[0] || "0");
+            return numA - numB;
+          });
+
+          for (const path of mediaFiles) {
+            const fileData = await mediaFolder.file(path.split('/').pop()!)?.async("base64");
+            if (fileData) {
+              const ext = path.split('.').pop()?.toLowerCase() || "png";
+              images.push(`data:image/${ext};base64,${fileData}`);
+            }
+          }
+        }
+
+        // 3. Map to Rooms/Items
         const newRooms: QuoteRoom[] = [newRoom("Imported Inventory")];
-        rows.forEach(row => {
+        rows.forEach((row, idx) => {
           newRooms[0].items.push(newItem({
-            category: String(row.Category || row.category || ""),
+            category: String(row.Category || row.category || row.Item || "New Item"),
             description: String(row.Description || row.description || ""),
-            price: toNumber(row.Price || row.price || 0),
-            quantity: toNumber(row.Quantity || row.quantity || 1),
+            price: toNumber(row.Price || row.price || row.Rate || 0),
+            quantity: toNumber(row.Quantity || row.quantity || row.Qty || 1),
             unitType: (row.Unit || row.unit || "nos") as UnitType,
-            material: String(row.Material || ""),
+            material: String(row.Material || row.material || ""),
+            imageUrl: images[idx] || "" // Attempt to map image by index
           }));
         });
+
         updateData(prev => ({ ...prev, rooms: [...prev.rooms, ...newRooms] }));
-        toast("Excel imported ✓");
-      } catch (err) { toast("Excel import failed", "error"); }
+        toast(`Imported ${rows.length} items with ${images.length} images ✓`);
+      } catch (err) {
+        console.error(err);
+        toast("Excel import failed", "error");
+      }
     };
     reader.readAsBinaryString(file);
   }

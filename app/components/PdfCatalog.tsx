@@ -1,21 +1,26 @@
 import React from "react";
 import { 
-  Page, Text, View, Document, StyleSheet, Image 
+  Page, Text, View, Document, StyleSheet, Image, Font 
 } from "@react-pdf/renderer";
 import { MAPLE_LOGO_B64 } from "../maple-logo-b64";
 import { money, discountAmount } from "../lib/utils";
 import { QuoteData, TotalsResult, TotalsLine } from "../lib/types";
 
-/**
- * MASTER PROPOSAL PDF
- * Using 100% Built-in Standard Fonts (No External Fetches)
- */
+// Register fonts to support Indian Rupee Symbol (₹)
+Font.register({
+  family: 'Inter',
+  fonts: [
+    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf', fontWeight: 500 },
+    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGkyfMZhrib2Bg-4.ttf', fontWeight: 700 },
+    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuymZhrib2Bg-4.ttf', fontWeight: 800 }
+  ]
+});
 
 const styles = StyleSheet.create({
   page: { 
     padding: 40, 
     backgroundColor: "#ffffff",
-    fontFamily: "Helvetica",
+    fontFamily: "Inter",
     fontSize: 9,
     color: "#333333"
   },
@@ -30,7 +35,7 @@ const styles = StyleSheet.create({
   logo: { width: 70, height: 70 },
   companyName: { 
     fontSize: 20, 
-    fontFamily: 'Times-Bold', 
+    fontWeight: 800,
     color: "#8a3535",
     marginBottom: 2
   },
@@ -47,13 +52,13 @@ const styles = StyleSheet.create({
   metaCol: { flex: 1 },
   metaLabel: { 
     fontSize: 7, 
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: "#8a3535", 
     textTransform: "uppercase", 
     letterSpacing: 1,
     marginBottom: 6
   },
-  metaValue: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: "#1a1a1a", marginBottom: 2 },
+  metaValue: { fontSize: 12, fontWeight: 700, color: "#1a1a1a", marginBottom: 2 },
   metaSub: { fontSize: 8, color: "#666666", lineHeight: 1.4 },
 
   roomHeader: { 
@@ -65,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 15
   },
-  roomName: { color: "#ffffff", fontSize: 10, fontFamily: 'Helvetica-Bold', textTransform: "uppercase" },
+  roomName: { color: "#ffffff", fontSize: 10, fontWeight: 700, textTransform: "uppercase" },
   roomCount: { color: "#ffffff", fontSize: 7, opacity: 0.8 },
 
   itemCard: { 
@@ -91,23 +96,28 @@ const styles = StyleSheet.create({
   cardTop: { flexDirection: "row", justifyContent: "space-between", marginBottom: 8 },
   categoryTag: { 
     fontSize: 7, 
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: "#a67c52", 
     textTransform: "uppercase" 
   },
   priceStack: { textAlign: "right" },
-  unitPrice: { fontSize: 8, color: "#777", marginBottom: 4, fontFamily: 'Helvetica' },
-  totalPrice: { fontSize: 13, fontFamily: 'Helvetica-Bold', color: "#1a1a1a" },
+  unitPrice: { fontSize: 8, color: "#777", marginBottom: 6 },
+  totalPriceBox: {
+    backgroundColor: "#8a3535",
+    padding: 6,
+    borderRadius: 4,
+  },
+  totalPrice: { fontSize: 13, fontWeight: 800, color: "#ffffff" },
   
   description: { fontSize: 8, color: "#444", lineHeight: 1.5, marginBottom: 10 },
   
   specGrid: { flexDirection: "row", flexWrap: "wrap", gap: 15 },
   specItem: { minWidth: 60 },
-  specLabel: { fontSize: 6, fontFamily: 'Helvetica-Bold', color: "#888", textTransform: "uppercase", marginBottom: 2 },
-  specValue: { fontSize: 8, color: "#1a1a1a", fontFamily: 'Helvetica-Bold' },
+  specLabel: { fontSize: 6, fontWeight: 700, color: "#888", textTransform: "uppercase", marginBottom: 2 },
+  specValue: { fontSize: 8, color: "#1a1a1a", fontWeight: 700 },
 
   summaryTable: { marginTop: 30, border: 1, borderColor: "#e6dfd1", borderRadius: 8, padding: 15 },
-  summaryTitle: { fontSize: 10, fontFamily: 'Helvetica-Bold', color: "#8a3535", marginBottom: 12, textTransform: "uppercase" },
+  summaryTitle: { fontSize: 10, fontWeight: 700, color: "#8a3535", marginBottom: 12, textTransform: "uppercase" },
   summaryRow: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 4, borderBottom: 0.5, borderBottomColor: "#eee" },
   summaryGrand: { 
     flexDirection: "row", 
@@ -117,16 +127,16 @@ const styles = StyleSheet.create({
     borderTop: 1, 
     borderTopColor: "#8a3535" 
   },
-  summaryGrandLabel: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: "#8a3535" },
-  summaryGrandValue: { fontSize: 14, fontFamily: 'Helvetica-Bold', color: "#8a3535" },
+  summaryGrandLabel: { fontSize: 12, fontWeight: 700, color: "#8a3535" },
+  summaryGrandValue: { fontSize: 14, fontWeight: 800, color: "#8a3535" },
 
   tnc: { marginTop: 30, padding: 15, backgroundColor: "#fdfbf7", borderRadius: 8 },
-  tncTitle: { fontSize: 11, fontFamily: 'Helvetica-Bold', color: "#8a3535", marginBottom: 10, textTransform: "uppercase" },
+  tncTitle: { fontSize: 11, fontWeight: 700, color: "#8a3535", marginBottom: 10, textTransform: "uppercase" },
   tncText: { fontSize: 10, color: "#4d4d4d", marginBottom: 6, lineHeight: 1.5 },
 
   footer: { position: "absolute", bottom: 30, left: 40, right: 40, borderTop: 0.5, borderTopColor: "#eee", paddingTop: 10 },
   footerLinks: { flexDirection: "row", justifyContent: "center", gap: 15, marginBottom: 5 },
-  linkText: { fontSize: 7, color: "#a67c52", fontFamily: 'Helvetica-Bold' },
+  linkText: { fontSize: 7, color: "#a67c52", fontWeight: 700 },
   pageNumber: { fontSize: 6, color: "#ccc", textAlign: "center" }
 });
 
@@ -177,14 +187,13 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
             <View style={{ flexDirection: "row", gap: 20 }}>
               <View>
                 <Text style={styles.metaSub}>REF NO.</Text>
-                <Text style={{ fontSize: 10, fontFamily: 'Helvetica-Bold' }}>{quote.number || "-"}</Text>
+                <Text style={{ fontSize: 10, fontWeight: 700 }}>{quote.number || "-"}</Text>
               </View>
               <View>
                 <Text style={styles.metaSub}>DATE</Text>
-                <Text style={{ fontSize: 10, fontFamily: 'Helvetica-Bold' }}>{quote.date || "-"}</Text>
+                <Text style={{ fontSize: 10, fontWeight: 700 }}>{quote.date || "-"}</Text>
               </View>
             </View>
-            <Text style={[styles.metaSub, { marginTop: 8 }]}>Currency: INR (₹)</Text>
           </View>
         </View>
 
@@ -207,11 +216,15 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
                     <View style={styles.cardTop}>
                       <View>
                         <Text style={styles.categoryTag}>{item.category || "Furniture"}</Text>
-                        <Text style={{ fontSize: 11, fontFamily: 'Helvetica-Bold', color: "#1a1a1a", marginTop: 2 }}>{item.category}</Text>
+                        <Text style={{ fontSize: 11, fontWeight: 700, color: "#1a1a1a", marginTop: 2 }}>
+                          {item.quantity} x {item.category}
+                        </Text>
                       </View>
                       <View style={styles.priceStack}>
-                        <Text style={styles.unitPrice}>Rate per unit: {money(item.price)}</Text>
-                        <Text style={styles.totalPrice}>{money(net)}</Text>
+                        <Text style={styles.unitPrice}>Rate: {money(item.price)}</Text>
+                        <View style={styles.totalPriceBox}>
+                          <Text style={styles.totalPrice}>{money(net)}</Text>
+                        </View>
                       </View>
                     </View>
                     <Text style={styles.description}>{item.description}</Text>
@@ -242,10 +255,10 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
 
         <View wrap={false} style={styles.summaryTable}>
           <Text style={styles.summaryTitle}>Financial Summary</Text>
-          {totals.lines.map((line: TotalsLine) => (
+          {totals.lines.filter(l => Math.abs(l.value) > 0 || l.isLast).map((line: TotalsLine) => (
             <View key={line.key} style={styles.summaryRow}>
-              <Text style={{ fontSize: 9, color: line.emphasis ? "#8a3535" : "#666", fontFamily: line.emphasis ? 'Helvetica-Bold' : "Helvetica" }}>{line.label}</Text>
-              <Text style={{ fontSize: 10, color: line.emphasis ? "#8a3535" : "#1a1a1a", fontFamily: 'Helvetica-Bold' }}>{money(line.value)}</Text>
+              <Text style={{ fontSize: 9, color: line.emphasis ? "#8a3535" : "#666", fontWeight: line.emphasis ? 700 : 500 }}>{line.label}</Text>
+              <Text style={{ fontSize: 10, color: line.emphasis ? "#8a3535" : "#1a1a1a", fontWeight: 700 }}>{money(line.value)}</Text>
             </View>
           ))}
           <View style={styles.summaryGrand}>
