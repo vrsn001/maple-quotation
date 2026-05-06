@@ -6,13 +6,14 @@ import { MAPLE_LOGO_B64 } from "../maple-logo-b64";
 import { money, discountAmount } from "../lib/utils";
 import { QuoteData, TotalsResult, TotalsLine } from "../lib/types";
 
-// Register fonts to support Indian Rupee Symbol (₹)
+// Register fonts to support Indian Rupee Symbol (₹) using reliable CDN
 Font.register({
-  family: 'Inter',
+  family: 'Roboto',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf', fontWeight: 500 },
-    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGkyfMZhrib2Bg-4.ttf', fontWeight: 700 },
-    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuymZhrib2Bg-4.ttf', fontWeight: 800 }
+    { src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf', fontWeight: 300 },
+    { src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf', fontWeight: 400 },
+    { src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf', fontWeight: 500 },
+    { src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf', fontWeight: 700 }
   ]
 });
 
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   page: { 
     padding: 40, 
     backgroundColor: "#ffffff",
-    fontFamily: "Inter",
+    fontFamily: "Roboto",
     fontSize: 9,
     color: "#333333"
   },
@@ -149,7 +150,7 @@ const WatermarkedImage = ({ src }: { src?: string }) => (
       </>
     ) : (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 20, opacity: 0.1, fontFamily: 'Times-Bold' }}>MAPLE</Text>
+        <Text style={{ fontSize: 20, opacity: 0.1, fontWeight: 700 }}>MAPLE</Text>
       </View>
     )}
   </View>
@@ -168,7 +169,7 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
           </View>
           <View style={{ alignItems: "flex-end", maxWidth: 300 }}>
             <Text style={styles.companyName}>MAPLE FURNISHERS</Text>
-            <Text style={{ fontSize: 8, color: "#a67c52", fontFamily: 'Helvetica-Bold', marginBottom: 6 }}>HERITAGE LUXURY | BESPOKE CRAFT</Text>
+            <Text style={{ fontSize: 8, color: "#a67c52", fontWeight: 700, marginBottom: 6 }}>HERITAGE LUXURY | BESPOKE CRAFT</Text>
             <Text style={styles.contactText}>B-3, W.H.S. Timber Market Kriti Nagar, Delhi-110015</Text>
             <Text style={styles.contactText}>Phone: 9262968727, 9523619534</Text>
             <Text style={styles.contactText}>Email: maplefurnishers77@gmail.com</Text>
