@@ -575,10 +575,7 @@ function QuotationBuilderContent() {
         <div className="p-8">
           <div className="flex flex-col gap-1">
             <h1 style={{ fontSize: '20px', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', fontFamily: 'var(--font-serif)' }}>MAPLE</h1>
-            <div className="flex items-center gap-2">
-              <span style={{ fontSize: '9px', fontWeight: 800, color: '#8a3535', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Quotation Suite</span>
-              <span style={{ fontSize: '8px', color: '#555560', fontWeight: 700 }}>विवरण</span>
-            </div>
+            <span style={{ fontSize: '9px', fontWeight: 800, color: '#8a3535', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Quotation Suite</span>
           </div>
         </div>
 
@@ -587,11 +584,11 @@ function QuotationBuilderContent() {
             <span style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.18em', color: '#555560', textTransform: 'uppercase' }}>Navigation</span>
           </div>
           {[
-            { id: "client", label: "Overview", sub: "विवरण", icon: "▤" },
-            { id: "rooms", label: "Inventory", sub: "सूची", icon: "❖" },
-            { id: "finance", label: "Commercials", sub: "वित्तीय", icon: "±" },
-            { id: "payment", label: "Settlement", sub: "भुगतान", icon: "💳" },
-            { id: "drafts", label: "Archives", sub: "संग्रह", icon: "📂" },
+            { id: "client", label: "Overview", icon: "▤" },
+            { id: "rooms", label: "Inventory", icon: "❖" },
+            { id: "finance", label: "Commercials", icon: "±" },
+            { id: "payment", label: "Settlement", icon: "💳" },
+            { id: "drafts", label: "Archives", icon: "📂" },
           ].map((item) => (
             <button
               type="button"
@@ -600,10 +597,7 @@ function QuotationBuilderContent() {
               className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
             >
               <span className="icon">{item.icon}</span>
-              <div className="flex flex-col items-start">
-                <span className="text-[12px] font-bold">{item.label}</span>
-                <span className="text-[8px] opacity-40 font-bold uppercase tracking-widest">{item.sub}</span>
-              </div>
+              <span className="text-[12px] font-bold">{item.label}</span>
             </button>
           ))}
         </nav>
@@ -1054,10 +1048,7 @@ function QuotationBuilderContent() {
           {/* Financial Summary */}
           <section className="space-y-4">
             <div className="flex items-center justify-between px-1">
-              <div className="flex flex-col">
-                <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Financial Summary</span>
-                <span className="text-[8px] font-bold text-[#555560] uppercase mt-0.5">वित्तीय सारांश</span>
-              </div>
+              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Financial Summary</span>
               <span className="text-[9px] font-bold text-[#555560] uppercase tracking-tighter">SEC: {data.rooms.length} Units</span>
             </div>
             
@@ -1090,10 +1081,7 @@ function QuotationBuilderContent() {
                 
                 <div className="flex justify-between items-center relative z-10">
                   <div className="flex flex-col">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-black text-white/90 uppercase tracking-[0.2em]">Grand Total</span>
-                      <span className="text-[8px] font-bold text-white/40 uppercase">कुल योग</span>
-                    </div>
+                    <span className="text-[10px] font-black text-white/90 uppercase tracking-[0.2em] mb-1">Grand Total</span>
                     <span className="text-[9px] text-white/50 font-bold uppercase tracking-widest">Official Seal of Value</span>
                   </div>
                   <div className="text-right">

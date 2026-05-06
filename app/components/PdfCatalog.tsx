@@ -130,8 +130,6 @@ const styles = StyleSheet.create({
   },
   summaryGrandLabel: { fontSize: 10, fontWeight: 700, color: "#8a3535" },
   summaryGrandValue: { fontSize: 14, fontWeight: 800, color: "#8a3535" },
-  bilingualLabel: { fontSize: 6, color: "#888", textTransform: "uppercase", marginTop: 2 },
-
   tnc: { marginTop: 30, padding: 15, backgroundColor: "#fdfbf7", borderRadius: 8 },
   tncTitle: { fontSize: 11, fontWeight: 700, color: "#8a3535", marginBottom: 10, textTransform: "uppercase" },
   tncText: { fontSize: 10, color: "#4d4d4d", marginBottom: 6, lineHeight: 1.5 },
@@ -179,19 +177,13 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
 
         <View style={styles.metaSection}>
           <View style={styles.metaCol}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <Text style={styles.metaLabel}>Client Details</Text>
-              <Text style={{ fontSize: 6, color: "#a67c52", fontWeight: 700 }}>विवरण</Text>
-            </div>
+            <Text style={styles.metaLabel}>Client Details</Text>
             <Text style={styles.metaValue}>{client.name || "Valued Client"}</Text>
             <Text style={styles.metaSub}>{client.phone || "-"}</Text>
             <Text style={[styles.metaSub, { width: 220 }]}>{client.address || "-"}</Text>
           </View>
           <View style={styles.metaCol}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <Text style={styles.metaLabel}>Quotation Info</Text>
-              <Text style={{ fontSize: 6, color: "#a67c52", fontWeight: 700 }}>सूचना</Text>
-            </div>
+            <Text style={styles.metaLabel}>Quotation Info</Text>
             <View style={{ flexDirection: "row", gap: 20 }}>
               <View>
                 <Text style={styles.metaSub}>REF №</Text>
@@ -262,10 +254,7 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
         ))}
 
         <View wrap={false} style={styles.summaryTable}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
-            <Text style={[styles.summaryTitle, { marginBottom: 0 }]}>Financial Summary</Text>
-            <Text style={{ fontSize: 8, color: "#a67c52", fontWeight: 700 }}>वित्तीय सारांश</Text>
-          </View>
+          <Text style={styles.summaryTitle}>Financial Summary</Text>
           {totals.lines.filter(l => Math.abs(l.value) > 0 || l.isLast).map((line: TotalsLine) => (
             <View key={line.key} style={styles.summaryRow}>
               <Text style={{ fontSize: 9, color: line.emphasis ? "#8a3535" : "#666", fontWeight: line.emphasis ? 700 : 500 }}>{line.label}</Text>
@@ -273,10 +262,7 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
             </View>
           ))}
           <View style={styles.summaryGrand}>
-            <View>
-              <Text style={styles.summaryGrandLabel}>GRAND TOTAL (INR)</Text>
-              <Text style={{ fontSize: 8, color: "#8a3535", opacity: 0.6 }}>कुल योग</Text>
-            </View>
+            <Text style={styles.summaryGrandLabel}>GRAND TOTAL (INR)</Text>
             <Text style={styles.summaryGrandValue}>{money(totals.grandTotal)}</Text>
           </View>
         </View>
