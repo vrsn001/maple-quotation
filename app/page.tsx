@@ -46,8 +46,8 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
         </div>
       ) : (
         <div style={{ background: 'white', color: '#111', padding: '24px', minHeight: '100%', fontSize: '11px', lineHeight: '1.6' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #632a2a', paddingBottom: '12px', marginBottom: '16px' }}>
-            <div style={{ fontWeight: 700, fontSize: '14px', color: '#632a2a' }}>MAPLE FURNISHERS</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #8a3535', paddingBottom: '12px', marginBottom: '16px' }}>
+            <div style={{ fontWeight: 700, fontSize: '14px', color: '#8a3535' }}>MAPLE FURNISHERS</div>
             <div style={{ fontSize: '9px', color: '#666', textAlign: 'right' }}>
               <div>B-3, W.H.S. Timber Market Kriti Nagar</div>
               <div>Delhi-110015</div>
@@ -70,7 +70,7 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
 
           {data.rooms.map((room) => (
             <div key={room.id} style={{ marginBottom: '16px' }}>
-              <div style={{ background: '#632a2a', color: 'white', padding: '6px 10px', fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', borderRadius: '3px', marginBottom: '8px' }}>
+              <div style={{ background: '#8a3535', color: 'white', padding: '6px 10px', fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', borderRadius: '3px', marginBottom: '8px' }}>
                 {room.name || 'Room'} — {room.items.length} items
               </div>
               {room.items.map((item) => {
@@ -82,7 +82,7 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
                       <div style={{ color: '#666', fontSize: '9px' }}>{item.description}</div>
                       <div style={{ color: '#999', fontSize: '8px' }}>Qty: {item.quantity} × ₹{item.price?.toLocaleString()}</div>
                     </div>
-                    <div style={{ fontWeight: 700, color: '#632a2a' }}>₹{total.toLocaleString()}</div>
+                    <div style={{ fontWeight: 700, color: '#8a3535' }}>₹{total.toLocaleString()}</div>
                   </div>
                 );
               })}
@@ -91,7 +91,7 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
 
           <div style={{ marginTop: '16px', borderTop: '1px solid #ddd', paddingTop: '12px' }}>
             {computed.totals.lines.map((line) => (
-              <div key={line.key} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontWeight: line.emphasis ? 700 : 400, color: line.emphasis ? '#632a2a' : '#333', fontSize: line.emphasis ? '12px' : '9px' }}>
+              <div key={line.key} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontWeight: line.emphasis ? 700 : 400, color: line.emphasis ? '#8a3535' : '#333', fontSize: line.emphasis ? '12px' : '9px' }}>
                 <span>{line.label}</span>
                 <span>₹{line.value?.toLocaleString()}</span>
               </div>
@@ -100,7 +100,7 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
 
           {terms.length > 0 && (
             <div style={{ marginTop: '16px', padding: '10px', background: '#fafafa', borderRadius: '4px' }}>
-              <div style={{ fontWeight: 700, fontSize: '9px', textTransform: 'uppercase', marginBottom: '6px', color: '#632a2a' }}>Terms & Conditions</div>
+              <div style={{ fontWeight: 700, fontSize: '9px', textTransform: 'uppercase', marginBottom: '6px', color: '#8a3535' }}>Terms & Conditions</div>
               {terms.map((t, i) => <div key={i} style={{ fontSize: '8px', color: '#555', marginBottom: '3px' }}>{i + 1}. {t}</div>)}
             </div>
           )}
@@ -409,23 +409,104 @@ function QuotationBuilderContent() {
     toast("Template applied ✓");
   };
 
-  function seedSampleData() {
-    const samples: Draft[] = Array.from({ length: 5 }).map((_, i) => {
-      const id = makeId();
-      const sampleData: QuoteData = {
-        version: 2,
-        client: { name: `Demo Client ${i+1}`, phone: `99999999${i}`, address: "Sample Address" },
-        quote: { number: `MF/2026/DEMO-${i+1}`, date: todayISODate(), validityDays: 15, siteName: "Demo Site", salesPerson: "Demo User" },
-        rooms: [newRoom("Living Area")],
-        charges: { packingPercent: 0, loadingCharge: 0, gstPercent: 18, gstMode: "excluded", splitCgstSgst: true, overallDiscountValue: 0, overallDiscountType: "flat" },
-        payment: { upiId: "maple@bank", bankName: "Heritage Bank", accountName: "Maple Furnishers", accountNumber: "", ifsc: "" },
-        updatedAt: Date.now()
-      };
-      return { id, name: `Demo: ${sampleData.client.name}`, savedAt: Date.now(), data: sampleData };
-    });
-    setDrafts(prev => [...samples, ...prev]);
-    localStorage.setItem(LS_KEY_DRAFTS, JSON.stringify([...samples, ...drafts]));
-    toast("Sample drafts added");
+  function seedFullSampleData() {
+    const sample: QuoteData = {
+      version: 2,
+      client: { 
+        name: "Oberoi Realty - Presidential Suite", 
+        phone: "+91 92629 68727", 
+        address: "Oberoi Commerz II, International Business Park, Oberoi Garden City, Goregaon (East), Mumbai, Maharashtra 400063" 
+      },
+      quote: { 
+        number: "MF/PRO/2026/089", 
+        date: todayISODate(), 
+        validityDays: 30, 
+        siteName: "Goregaon East Project", 
+        salesPerson: "Arjun Sharma" 
+      },
+      rooms: [
+        {
+          id: makeId(),
+          name: "Grand Living Area",
+          roomDiscountValue: 15000,
+          roomDiscountType: "flat",
+          moodBoard: [],
+          items: [
+            newItem({ 
+              category: "Heritage Chesterfield Sofa", 
+              description: "Handcrafted 3-seater sofa with deep button tufting, upholstered in premium Italian leather (Oxblood Maroon). Solid teak wood frame with mahogany finish.",
+              price: 185000, 
+              quantity: 1, 
+              unitType: "nos",
+              material: "Teak Wood & Italian Leather",
+              imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=2070&auto=format&fit=crop"
+            }),
+            newItem({ 
+              category: "Imperial Marble Coffee Table", 
+              description: "Nero Marquina marble top with geometric brass inlay work. Tapered metal legs with antique gold finish.",
+              price: 45000, 
+              quantity: 1, 
+              unitType: "nos",
+              material: "Marble & Brass",
+              imageUrl: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=2069&auto=format&fit=crop"
+            })
+          ]
+        },
+        {
+          id: makeId(),
+          name: "Master Suite",
+          roomDiscountValue: 5,
+          roomDiscountType: "percent",
+          moodBoard: [],
+          items: [
+            newItem({ 
+              category: "Velvet Wingback Bed", 
+              description: "King-sized bed with high-back velvet upholstery. Storage base with hydraulic lift mechanism.",
+              price: 220000, 
+              quantity: 1, 
+              unitType: "nos",
+              material: "Velvet & Engineered Wood",
+              imageUrl: "https://images.unsplash.com/photo-1505693419148-43311b1348f2?q=80&w=2070&auto=format&fit=crop"
+            }),
+            newItem({ 
+              category: "Antique Dresser", 
+              description: "6-drawer dresser with hand-carved floral motifs and crystal knobs.",
+              price: 65000, 
+              quantity: 1, 
+              unitType: "nos",
+              material: "Solid Oak",
+              imageUrl: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?q=80&w=1974&auto=format&fit=crop"
+            })
+          ]
+        }
+      ],
+      charges: { 
+        packingPercent: 2, 
+        loadingCharge: 1500, 
+        gstPercent: 18, 
+        gstMode: "excluded", 
+        splitCgstSgst: true, 
+        overallDiscountValue: 10, 
+        overallDiscountType: "percent" 
+      },
+      payment: { 
+        upiId: "maplefurnishers@axis", 
+        bankName: "Axis Bank", 
+        accountName: "Maple Furnishers Private Limited", 
+        accountNumber: "921020038847281", 
+        ifsc: "UTIB0001293" 
+      },
+      updatedAt: Date.now()
+    };
+    setData(sample);
+    setTerms([
+      "50% Advance at the time of booking, 40% before dispatch, and 10% after installation.",
+      "Delivery timeline: 4-6 weeks from the date of advance payment.",
+      "Customized items cannot be returned or replaced once production starts.",
+      "Standard 1-year warranty on manufacturing defects.",
+      "GST as per government norms at the time of invoicing."
+    ]);
+    toast("Full sample data seeded ✓");
   }
 
   return (
@@ -435,7 +516,7 @@ function QuotationBuilderContent() {
       <aside className="w-[220px] flex flex-col shrink-0 z-20" style={{ background: '#111114', borderRight: '1px solid #1e1e23' }}>
         <div style={{ padding: '20px 16px 16px' }}>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#632a2a] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#8a3535] flex items-center justify-center">
               <img src={MAPLE_LOGO_B64} alt="Logo" className="w-6 h-6 object-contain brightness-0" />
             </div>
             <div style={{ marginTop: '10px' }}>
@@ -468,27 +549,27 @@ function QuotationBuilderContent() {
           ))}
         </nav>
 
-        <div style={{ borderTop: '1px solid #1e1e23', padding: '16px' }}>
-          <div className="flex items-center justify-between mb-3">
-            <span style={{ fontSize: '11px', color: '#555560' }}>System time</span>
+        <div style={{ borderTop: '1px solid #1e1e23', padding: '24px 20px' }}>
+          <div className="flex items-center justify-between mb-5">
+            <span style={{ fontSize: '13px', color: '#555560', fontWeight: 500 }}>System time</span>
             <LiveClock />
           </div>
-          <div className="space-y-[6px]">
-            <div className="flex justify-between items-center">
-              <span style={{ fontSize: '11px', color: '#555560' }}>Save Draft</span>
-              <span style={{ background: '#232329', borderRadius: '4px', padding: '2px 6px', fontSize: '10px', color: '#888896' }}>⌃S</span>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center group">
+              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">Save Draft</span>
+              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃S</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span style={{ fontSize: '11px', color: '#555560' }}>Export PDF</span>
-              <span style={{ background: '#232329', borderRadius: '4px', padding: '2px 6px', fontSize: '10px', color: '#888896' }}>⌃P</span>
+            <div className="flex justify-between items-center group">
+              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">Export PDF</span>
+              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃P</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span style={{ fontSize: '11px', color: '#555560' }}>Undo Change</span>
-              <span style={{ background: '#232329', borderRadius: '4px', padding: '2px 6px', fontSize: '10px', color: '#888896' }}>⌃Z</span>
+            <div className="flex justify-between items-center group">
+              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">Undo Change</span>
+              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃Z</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span style={{ fontSize: '11px', color: '#555560' }}>New Quote</span>
-              <span style={{ background: '#232329', borderRadius: '4px', padding: '2px 6px', fontSize: '10px', color: '#888896' }}>⌃N</span>
+            <div className="flex justify-between items-center group">
+              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">New Quote</span>
+              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃N</span>
             </div>
           </div>
         </div>
@@ -585,8 +666,8 @@ function QuotationBuilderContent() {
                   <p style={{ fontSize: '12px', color: '#888896', marginTop: '4px' }}>Allocation by Room & Category</p>
                 </div>
                 <div className="flex gap-3">
-                  <label className="creative-btn secondary cursor-pointer" style={{ height: '34px', padding: '0 16px' }}>
-                    <span>📥 Import Excel</span>
+                  <label className="creative-btn secondary cursor-pointer !h-9 !px-5 !rounded-xl">
+                    <span className="flex items-center gap-2">📥 Import Excel</span>
                     <input type="file" className="hidden" accept=".xlsx,.xls" onChange={onImportExcel} />
                   </label>
                   <CreativeButton onClick={addRoom}>+ Create Room</CreativeButton>
@@ -597,7 +678,7 @@ function QuotationBuilderContent() {
                 <div key={room.id} className="card overflow-hidden" style={{ padding: 0, marginBottom: '20px' }}>
                   <div className="room-header">
                     <div className="flex items-center flex-1">
-                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#632a2a', color: '#ffffff', fontSize: '12px', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginRight: '12px' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#8a3535', color: '#ffffff', fontSize: '12px', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginRight: '12px' }}>
                         {rIdx + 1}
                       </div>
                       <input
@@ -642,12 +723,24 @@ function QuotationBuilderContent() {
                           <tr key={item.id} className="group">
                             <td>
                               <div className="flex gap-4">
-                                <div className="item-img-box">
+                                <div className="item-img-box group/img relative">
                                   {item.imageUrl ? <img src={item.imageUrl} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center opacity-20 text-xl">📸</div>}
-                                  <label className="item-img-overlay">
-                                    REPLACE
-                                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageUpload(rIdx, iIdx, e)} />
-                                  </label>
+                                  <div className="absolute inset-0 bg-black/80 opacity-0 group-hover/img:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
+                                    <label className="text-[9px] font-bold text-white cursor-pointer hover:underline">
+                                      LOCAL FILE
+                                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageUpload(rIdx, iIdx, e)} />
+                                    </label>
+                                    <div className="w-full h-[1px] bg-white/20" />
+                                    <button 
+                                      onClick={() => {
+                                        const url = prompt("Enter image URL:");
+                                        if (url) updateItem(rIdx, iIdx, { imageUrl: url });
+                                      }}
+                                      className="text-[9px] font-bold text-white hover:underline"
+                                    >
+                                      FROM LINK
+                                    </button>
+                                  </div>
                                 </div>
                                 <div className="flex-1 space-y-1.5">
                                   <input 
@@ -707,17 +800,17 @@ function QuotationBuilderContent() {
                     <div className="flex items-center gap-6">
                       <div className="flex items-center gap-3">
                         <span className="section-label mb-0">Room Discount</span>
-                        <div className="flex gap-1.5">
-                          <NumberInput className="h-8 w-20 px-2" value={room.roomDiscountValue} onChange={(e) => updateRoom(rIdx, { roomDiscountValue: toNumber(e.target.value) })} />
-                          <Select className="h-8 w-24 text-[10px] px-1" value={room.roomDiscountType} onChange={(e) => updateRoom(rIdx, { roomDiscountType: e.target.value as DiscountType })}>
-                            <option value="flat">Flat ₹</option><option value="percent">% Off</option>
+                        <div className="flex gap-2">
+                          <NumberInput className="h-7 w-16 px-2 text-[11px]" value={room.roomDiscountValue} onChange={(e) => updateRoom(rIdx, { roomDiscountValue: toNumber(e.target.value) })} />
+                          <Select className="h-7 w-20 text-[10px] px-1" value={room.roomDiscountType} onChange={(e) => updateRoom(rIdx, { roomDiscountType: e.target.value as DiscountType })}>
+                            <option value="flat">₹ Flat</option><option value="percent">% Off</option>
                           </Select>
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
                       <span className="section-label mb-0 mr-3 inline-block">Room Net:</span>
-                      <span className="text-lg font-bold text-[#632a2a] tabular-nums">{money(computed.summaryByRoom[rIdx]?.net)}</span>
+                      <span className="text-lg font-bold text-[#8a3535] tabular-nums">{money(computed.summaryByRoom[rIdx]?.net)}</span>
                     </div>
                   </div>
                 </div>
@@ -754,16 +847,19 @@ function QuotationBuilderContent() {
                     <NumberInput value={data.charges.loadingCharge} onChange={(e) => updateData(p => ({ ...p, charges: { ...p.charges, loadingCharge: toNumber(e.target.value) }}))} />
                   </InputLabel>
                 </div>
-                <div className="mt-6 p-4 rounded-xl flex items-center justify-between" style={{ background: 'rgba(99,42,42,0.05)', border: '1px solid rgba(99,42,42,0.15)' }}>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-[#632a2a]" />
-                    <span className="text-[12px] font-semibold text-[#88889a]">Split GST into CGST & SGST (9%+9%)</span>
+                <div className="mt-8 p-6 rounded-2xl flex items-center justify-between" style={{ background: 'rgba(99,42,42,0.03)', border: '1px solid rgba(99,42,42,0.1)' }}>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#8a3535]" />
+                      <span className="text-[14px] font-bold text-[#f4f4f6]">Tax Configuration</span>
+                    </div>
+                    <span className="text-[12px] text-[#88889a] ml-3.5">Split GST into CGST (9%) & SGST (9%) for regional compliance</span>
                   </div>
                   <button 
                     onClick={() => updateData(p => ({ ...p, charges: { ...p.charges, splitCgstSgst: !p.charges.splitCgstSgst }}))}
-                    className={`w-10 h-5 rounded-full transition-all relative ${data.charges.splitCgstSgst ? 'bg-[#632a2a]' : 'bg-[#22223a]'}`}
+                    className={`w-12 h-6 rounded-full transition-all relative ${data.charges.splitCgstSgst ? 'bg-[#8a3535]' : 'bg-[#2e2e33]'}`}
                   >
-                    <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${data.charges.splitCgstSgst ? 'left-6' : 'left-1'}`} />
+                    <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all ${data.charges.splitCgstSgst ? 'left-7' : 'left-1'}`} />
                   </button>
                 </div>
               </div>
@@ -821,7 +917,7 @@ function QuotationBuilderContent() {
                   <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#ffffff' }}>Saved Drafts</h2>
                   <p style={{ fontSize: '12px', color: '#888896', marginTop: '4px' }}>Saved locally in this browser</p>
                 </div>
-                <CreativeButton onClick={seedSampleData} variant="secondary" className="h-9 !px-4 text-[11px]">+ Seed Sample Data</CreativeButton>
+                <CreativeButton onClick={seedFullSampleData} variant="secondary" className="h-9 !px-4 text-[11px]">+ Seed Full Sample</CreativeButton>
               </div>
 
               {drafts.length === 0 ? (
@@ -836,7 +932,7 @@ function QuotationBuilderContent() {
                         <div className="flex justify-between items-start mb-3">
                           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style={{ background: '#232329', border: '1px solid #38383f' }}>📄</div>
                           <div className="text-right">
-                            <div style={{ fontSize: '14px', fontWeight: 700, color: '#632a2a' }}>{money(computeTotals(d.data).totals.grandTotal)}</div>
+                            <div style={{ fontSize: '14px', fontWeight: 700, color: '#8a3535' }}>{money(computeTotals(d.data).totals.grandTotal)}</div>
                             <div style={{ fontSize: '9px', color: '#888896', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginTop: '4px' }}>{d.data.rooms.length} Rooms</div>
                           </div>
                         </div>
@@ -872,7 +968,7 @@ function QuotationBuilderContent() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scroll" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div className="flex-1 overflow-y-auto custom-scroll" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
           <div className="card" style={{ marginBottom: 0 }}>
             <div className="fin-header">Financial Summary</div>
             <div>
@@ -892,14 +988,14 @@ function QuotationBuilderContent() {
                   <span style={{ 
                     fontSize: line.isLast ? '16px' : '13px', 
                     fontWeight: line.isLast ? 800 : 400, 
-                    color: line.isLast ? '#632a2a' : '#888896' 
+                    color: line.isLast ? '#8a3535' : '#888896' 
                   }}>
                     {line.label}
                   </span>
                   <span style={{ 
                     fontSize: line.isLast ? '16px' : '13px', 
                     fontWeight: line.isLast ? 800 : 500, 
-                    color: line.isLast ? '#632a2a' : '#e4e4e7' 
+                    color: line.isLast ? '#8a3535' : '#e4e4e7' 
                   }} className="tabular-nums">
                     {money(line.value)}
                   </span>

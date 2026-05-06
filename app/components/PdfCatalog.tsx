@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     justifyContent: "space-between", 
     borderBottom: 2, 
-    borderBottomColor: "#632a2a", 
+    borderBottomColor: "#8a3535", 
     paddingBottom: 20,
     marginBottom: 30
   },
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   companyName: { 
     fontSize: 20, 
     fontFamily: 'Times-Bold', 
-    color: "#632a2a",
+    color: "#8a3535",
     marginBottom: 2
   },
   contactText: { fontSize: 8, color: "#7d6e63", textAlign: "right", lineHeight: 1.3 },
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   metaLabel: { 
     fontSize: 7, 
     fontFamily: 'Helvetica-Bold',
-    color: "#632a2a", 
+    color: "#8a3535", 
     textTransform: "uppercase", 
     letterSpacing: 1,
     marginBottom: 6
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   metaSub: { fontSize: 8, color: "#666666", lineHeight: 1.4 },
 
   roomHeader: { 
-    backgroundColor: "#632a2a", 
+    backgroundColor: "#8a3535", 
     padding: 10, 
     borderRadius: 4, 
     flexDirection: "row", 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   specValue: { fontSize: 8, color: "#1a1a1a", fontFamily: 'Helvetica-Bold' },
 
   summaryTable: { marginTop: 30, border: 1, borderColor: "#e6dfd1", borderRadius: 8, padding: 15 },
-  summaryTitle: { fontSize: 10, fontFamily: 'Helvetica-Bold', color: "#632a2a", marginBottom: 12, textTransform: "uppercase" },
+  summaryTitle: { fontSize: 10, fontFamily: 'Helvetica-Bold', color: "#8a3535", marginBottom: 12, textTransform: "uppercase" },
   summaryRow: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 4, borderBottom: 0.5, borderBottomColor: "#eee" },
   summaryGrand: { 
     flexDirection: "row", 
@@ -115,13 +115,13 @@ const styles = StyleSheet.create({
     marginTop: 10, 
     paddingTop: 10, 
     borderTop: 1, 
-    borderTopColor: "#632a2a" 
+    borderTopColor: "#8a3535" 
   },
-  summaryGrandLabel: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: "#632a2a" },
-  summaryGrandValue: { fontSize: 14, fontFamily: 'Helvetica-Bold', color: "#632a2a" },
+  summaryGrandLabel: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: "#8a3535" },
+  summaryGrandValue: { fontSize: 14, fontFamily: 'Helvetica-Bold', color: "#8a3535" },
 
   tnc: { marginTop: 30, padding: 15, backgroundColor: "#fdfbf7", borderRadius: 8 },
-  tncTitle: { fontSize: 11, fontFamily: 'Helvetica-Bold', color: "#632a2a", marginBottom: 10, textTransform: "uppercase" },
+  tncTitle: { fontSize: 11, fontFamily: 'Helvetica-Bold', color: "#8a3535", marginBottom: 10, textTransform: "uppercase" },
   tncText: { fontSize: 10, color: "#4d4d4d", marginBottom: 6, lineHeight: 1.5 },
 
   footer: { position: "absolute", bottom: 30, left: 40, right: 40, borderTop: 0.5, borderTopColor: "#eee", paddingTop: 10 },
@@ -244,8 +244,8 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
           <Text style={styles.summaryTitle}>Financial Summary</Text>
           {totals.lines.map((line: TotalsLine) => (
             <View key={line.key} style={styles.summaryRow}>
-              <Text style={{ fontSize: 9, color: line.emphasis ? "#632a2a" : "#666", fontFamily: line.emphasis ? 'Helvetica-Bold' : "Helvetica" }}>{line.label}</Text>
-              <Text style={{ fontSize: 10, color: line.emphasis ? "#632a2a" : "#1a1a1a", fontFamily: 'Helvetica-Bold' }}>{money(line.value)}</Text>
+              <Text style={{ fontSize: 9, color: line.emphasis ? "#8a3535" : "#666", fontFamily: line.emphasis ? 'Helvetica-Bold' : "Helvetica" }}>{line.label}</Text>
+              <Text style={{ fontSize: 10, color: line.emphasis ? "#8a3535" : "#1a1a1a", fontFamily: 'Helvetica-Bold' }}>{money(line.value)}</Text>
             </View>
           ))}
           <View style={styles.summaryGrand}>

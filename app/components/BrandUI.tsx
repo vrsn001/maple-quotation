@@ -21,7 +21,7 @@ export const BrandStyles = `
   .maple-input:hover:not(:disabled) { border-color: #4a4a54; }
   .maple-input:focus {
     outline: none;
-    border-color: #632a2a;
+    border-color: #8a3535;
     box-shadow: 0 0 0 3px rgba(99,42,42,0.12);
   }
   .maple-input::placeholder { color: #555560; }
@@ -45,7 +45,7 @@ export const BrandStyles = `
 
   /* ── BUTTONS ────────────────────────────────────────────────── */
   .maple-btn-primary {
-    background: #632a2a;
+    background: #8a3535;
     color: #ffffff;
     font-weight: 700;
     font-size: 13px;
@@ -176,7 +176,7 @@ export const BrandStyles = `
   }
   .badge-accent {
     background: rgba(99,42,42,0.10);
-    color: #632a2a;
+    color: #8a3535;
     border: 1px solid rgba(99,42,42,0.18);
   }
 
@@ -218,7 +218,7 @@ export const BrandStyles = `
   .nav-item.active {
     background: rgba(99,42,42,0.1);
     color: #a85555;
-    border-left-color: #632a2a;
+    border-left-color: #8a3535;
     padding-left: 12px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -243,7 +243,7 @@ export const BrandStyles = `
     border-bottom: none;
   }
   .fin-line.grand .fin-label { font-size: 15px; font-weight: 700; color: #ffffff; }
-  .fin-line.grand .fin-value { font-size: 18px; font-weight: 800; color: #632a2a; }
+  .fin-line.grand .fin-value { font-size: 18px; font-weight: 800; color: #8a3535; }
   .fin-header {
     font-size: 14px;
     font-weight: 700;
@@ -313,7 +313,7 @@ export const BrandStyles = `
     border-bottom: 1px solid #1e1e23;
   }
   .maple-table td {
-    padding: 16px;
+    padding: 24px 16px;
     border-bottom: 1px solid #1e1e23;
     vertical-align: top;
     background: #111114;
@@ -508,9 +508,9 @@ export const BrandStyles = `
     opacity: 1;
   }
   .creative-btn.primary {
-    background: #632a2a;
+    background: #8a3535;
     color: #ffffff;
-    border-color: #632a2a;
+    border-color: #8a3535;
     height: 34px;
     padding: 0 18px;
     box-shadow: 0 2px 8px rgba(99,42,42,0.25);

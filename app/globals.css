@@ -8,16 +8,18 @@
   --bg-surface:   #18181b;
   --bg-elevated:  #232329;
   --bg-hover:     #2e2e33;
+  --text-secondary: #b0b0bc;
+  --text-muted:     #7c7c8e;
 
   /* Borders */
   --border:        #2e2e33;
   --border-subtle: #1e1e23;
   --border-focus:  rgba(99,42,42,0.55);
-  --accent:       #632a2a;
+  --accent:       #8a3535;
   --accent-light: #a85555;
-  --accent-hover: #7a3333;
-  --accent-dim:   rgba(99,42,42,0.08);
-  --accent-glow:  rgba(99,42,42,0.18);
+  --accent-hover: #9c3c3c;
+  --accent-dim:   rgba(138,53,53,0.08);
+  --accent-glow:  rgba(138,53,53,0.18);
 
   /* Semantic */
   --red:         #f04747;
