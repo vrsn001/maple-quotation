@@ -433,22 +433,22 @@ function QuotationBuilderContent() {
     <div className="flex h-screen overflow-hidden bg-[var(--bg)] text-[var(--text)]">
       
       {/* LEFT SIDEBAR */}
-      <aside className="w-[240px] flex flex-col border-r border-[var(--border-subtle)] bg-[var(--bg-surface)] shrink-0">
+      <aside className="w-[240px] flex flex-col border-r border-[#1f1f1f] bg-[#111113] shrink-0">
         <div className="p-6 pb-2">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent-hover)] flex items-center justify-center shadow-lg shadow-[var(--accent-glow)]">
-              <img src={MAPLE_LOGO_B64} alt="Logo" className="w-6 h-6 object-contain brightness-0 invert" />
+            <div className="w-9 h-9 rounded-xl bg-[#c8a96e] flex items-center justify-center shadow-lg shadow-black/20">
+              <img src={MAPLE_LOGO_B64} alt="Logo" className="w-6 h-6 object-contain brightness-0" />
             </div>
             <div>
-              <div className="text-[14px] font-bold leading-tight tracking-tight">Maple</div>
-              <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-widest font-bold">Quotation Suite</div>
+              <div className="text-[14px] font-bold leading-tight tracking-tight text-[#fafafa]">Maple</div>
+              <div className="text-[10px] text-[#71717a] uppercase tracking-widest font-bold">Quotation Suite</div>
             </div>
           </div>
         </div>
         
-        <nav className="flex-1 px-3 mt-6 space-y-1">
-          <div className="px-3 mb-2">
-            <span className="section-label">Navigation</span>
+        <nav className="flex-1 px-0 mt-6 space-y-1">
+          <div className="px-4 mb-2">
+            <span className="text-[9px] font-bold tracking-[0.15em] text-[#52525b] uppercase">Navigation</span>
           </div>
           {[
             { id: "client", label: "Overview", icon: "▤" },
@@ -463,27 +463,33 @@ function QuotationBuilderContent() {
               onClick={() => selectTab(item.id as typeof activeTab)}
               className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
             >
-              <span className="text-base opacity-70">{item.icon}</span>
+              <span className="icon">{item.icon}</span>
               {item.label}
             </button>
           ))}
         </nav>
 
-        <div className="p-4 mx-3 mb-6 rounded-xl bg-[var(--bg-elevated)]/50 border border-[var(--border-subtle)]">
+        <div className="border-t border-[#1f1f1f] p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="section-label">System Time</span>
+            <span className="text-[9px] font-bold tracking-[0.15em] text-[#52525b] uppercase">System Time</span>
             <LiveClock />
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)]">
-              <span>Shortcuts</span>
-              <span className="kbd">CTRL+?</span>
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center">
+              <span className="text-[11px] text-[#52525b]">Save Draft</span>
+              <span className="bg-[#27272a] rounded-[4px] px-1.5 py-0.5 text-[10px] text-[#a1a1aa]">CTRL+S</span>
             </div>
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              <div className="text-[9px] text-[var(--text-muted)] font-medium"><span className="kbd mr-1">S</span> Save</div>
-              <div className="text-[9px] text-[var(--text-muted)] font-medium"><span className="kbd mr-1">P</span> PDF</div>
-              <div className="text-[9px] text-[var(--text-muted)] font-medium"><span className="kbd mr-1">Z</span> Undo</div>
-              <div className="text-[9px] text-[var(--text-muted)] font-medium"><span className="kbd mr-1">N</span> New</div>
+            <div className="flex justify-between items-center">
+              <span className="text-[11px] text-[#52525b]">Export PDF</span>
+              <span className="bg-[#27272a] rounded-[4px] px-1.5 py-0.5 text-[10px] text-[#a1a1aa]">CTRL+P</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[11px] text-[#52525b]">Undo Change</span>
+              <span className="bg-[#27272a] rounded-[4px] px-1.5 py-0.5 text-[10px] text-[#a1a1aa]">CTRL+Z</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[11px] text-[#52525b]">New Quote</span>
+              <span className="bg-[#27272a] rounded-[4px] px-1.5 py-0.5 text-[10px] text-[#a1a1aa]">CTRL+N</span>
             </div>
           </div>
         </div>
@@ -494,33 +500,32 @@ function QuotationBuilderContent() {
         
         {/* TOP BAR */}
         <header className="topbar">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 group">
-              <span className="text-[var(--text-muted)] text-sm">#</span>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-[#52525b] text-sm">#</span>
               <input 
                 value={data.quote.number} 
                 onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, number: e.target.value }}))}
-                className="bg-transparent border-none text-sm font-bold focus:outline-none w-40 text-[var(--text)] group-hover:text-[var(--accent)] transition-colors"
+                className="bg-transparent border-none text-[14px] font-semibold focus:outline-none w-44 text-[#fafafa]"
                 placeholder="QUOTE-NO"
               />
             </div>
-            <div className="divider-v h-4" />
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[var(--green)] animate-pulse-glow" />
-              <span className="text-[11px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Live Editing</span>
+            <div className="live-edit-badge">
+              <div className="live-edit-dot" />
+              LIVE EDITING
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center bg-[var(--bg-elevated)] rounded-lg p-0.5 border border-[var(--border)] mr-2">
+            <div className="flex items-center gap-1.5 mr-2">
               <button type="button" onClick={undo} className="maple-btn-icon" title="Undo (Ctrl+Z)">↺</button>
               <button type="button" onClick={redo} className="maple-btn-icon" title="Redo (Ctrl+Shift+Z)">↻</button>
             </div>
             
-            <button type="button" onClick={openTemplates} className="maple-btn-secondary h-8">Templates</button>
-            <button type="button" onClick={shareQuote} className="maple-btn-secondary h-8">Share</button>
-            <button type="button" onClick={saveDraft} className="maple-btn-secondary h-8">Save Draft</button>
-            <button type="button" onClick={onGeneratePdf} className="maple-btn-primary h-8">Generate PDF</button>
+            <button type="button" onClick={openTemplates} className="bg-transparent border-none text-[#a1a1aa] text-[13px] hover:text-[#fafafa] px-2 transition-colors">Templates</button>
+            <button type="button" onClick={shareQuote} className="bg-transparent border-none text-[#a1a1aa] text-[13px] hover:text-[#fafafa] px-2 transition-colors">Share</button>
+            <button type="button" onClick={saveDraft} className="maple-btn-secondary">Save Draft</button>
+            <button type="button" onClick={onGeneratePdf} className="maple-btn-primary">Generate PDF</button>
           </div>
         </header>
 
@@ -530,10 +535,10 @@ function QuotationBuilderContent() {
           <section className="contents">
           
           {activeTab === "client" && (
-            <div className="max-w-4xl space-y-6 animate-slide-up">
-              <div className="card p-8">
+            <div className="max-w-4xl space-y-4 animate-slide-up">
+              <div className="card">
                 <h2 className="section-heading">Client Information</h2>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-4">
                   <InputLabel label="Client Full Name">
                     <TextInput value={data.client.name} onChange={(e) => updateData(p => ({ ...p, client: { ...p.client, name: e.target.value }}))} placeholder="e.g. Vimal Gupta" />
                   </InputLabel>
@@ -548,9 +553,9 @@ function QuotationBuilderContent() {
                 </div>
               </div>
 
-              <div className="card p-8">
+              <div className="card">
                 <h2 className="section-heading">Proposal Configuration</h2>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-4">
                   <InputLabel label="Quote Identifier">
                     <TextInput value={data.quote.number} onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, number: e.target.value }}))} />
                   </InputLabel>
@@ -563,9 +568,11 @@ function QuotationBuilderContent() {
                   <InputLabel label="Sales Executive">
                     <TextInput value={data.quote.salesPerson} onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, salesPerson: e.target.value }}))} />
                   </InputLabel>
-                  <InputLabel label="Project / Site Name">
-                    <TextInput value={data.quote.siteName} onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, siteName: e.target.value }}))} placeholder="e.g. Skyline Residency" />
-                  </InputLabel>
+                  <div className="col-span-2">
+                    <InputLabel label="Project / Site Name">
+                      <TextInput value={data.quote.siteName} onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, siteName: e.target.value }}))} placeholder="e.g. Skyline Residency" />
+                    </InputLabel>
+                  </div>
                 </div>
               </div>
             </div>
@@ -573,10 +580,10 @@ function QuotationBuilderContent() {
 
           {activeTab === "rooms" && (
             <div className="space-y-6 animate-slide-up">
-              <div className="flex items-center justify-between bg-[var(--bg-elevated)]/30 p-4 rounded-xl border border-[var(--border-subtle)]">
+              <div className="card !p-4 flex items-center justify-between !mb-6">
                 <div>
-                  <h2 className="text-base font-bold text-[var(--text)]">Project Inventory</h2>
-                  <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-widest font-bold mt-0.5">Allocation by Room & Category</p>
+                  <h2 className="text-base font-bold text-[#fafafa]">Project Inventory</h2>
+                  <p className="text-[10px] text-[#71717a] uppercase tracking-widest font-bold mt-0.5">Allocation by Room & Category</p>
                 </div>
                 <div className="flex gap-3">
                   <label className="maple-btn-secondary h-9 cursor-pointer">
@@ -591,7 +598,7 @@ function QuotationBuilderContent() {
                 <div key={room.id} className="card overflow-hidden border-[var(--border-subtle)] shadow-lg hover:border-[var(--border)] transition-base">
                   <div className="room-header">
                     <div className="flex items-center gap-4 flex-1">
-                      <div className="w-8 h-8 rounded-lg bg-[var(--bg-elevated)] flex items-center justify-center border border-[var(--border)] text-[var(--text-muted)]">
+                      <div className="w-8 h-8 rounded-lg bg-[#27272a] flex items-center justify-center border border-[#3f3f46] text-[#fafafa] font-bold text-xs">
                         {rIdx + 1}
                       </div>
                       <input 
@@ -602,8 +609,8 @@ function QuotationBuilderContent() {
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="badge badge-neutral">{room.items.length} items</span>
-                      <div className="divider-v h-4 mx-2" />
+                      <span className="bg-[#27272a] text-[#a1a1aa] text-[10px] px-2 py-0.5 rounded font-bold uppercase">{room.items.length} items</span>
+                      <div className="w-[1px] h-4 bg-[#27272a] mx-2" />
                       <Select className="h-8 w-44 text-[10px]" onChange={(e) => {
                         const t = TEMPLATES.find(t => t.label === e.target.value);
                         if(t) addItem(rIdx, t);
@@ -663,14 +670,14 @@ function QuotationBuilderContent() {
                               </div>
                             </td>
                             <td>
-                              <div className="space-y-3">
-                                <div className="grid grid-cols-2 gap-2">
+                              <div className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4">
                                   <InputLabel label="Material"><TextInput className="h-7 text-[10px] px-2" value={item.material} onChange={(e) => updateItem(rIdx, iIdx, { material: e.target.value })} /></InputLabel>
                                   <InputLabel label="Fabric"><TextInput className="h-7 text-[10px] px-2" value={item.fabric} onChange={(e) => updateItem(rIdx, iIdx, { fabric: e.target.value })} /></InputLabel>
                                 </div>
                                 <div>
                                   <span className="section-label mb-1.5 block">Size (L × W × H)</span>
-                                  <div className="flex gap-1">
+                                  <div className="flex gap-1.5">
                                     {(['l', 'w', 'h'] as Array<keyof NonNullable<QuoteItem['dimensions']>>).map(d => (
                                       <NumberInput key={d} placeholder={d.toUpperCase()} className="h-7 text-[10px] px-1 text-center" value={item.dimensions?.[d]} onChange={(e) => updateItem(rIdx, iIdx, { dimensions: { ...item.dimensions!, [d]: toNumber(e.target.value) } })} />
                                     ))}
@@ -679,7 +686,7 @@ function QuotationBuilderContent() {
                               </div>
                             </td>
                             <td>
-                              <div className="grid grid-cols-2 gap-x-3 gap-y-3">
+                              <div className="grid grid-cols-2 gap-4">
                                 <InputLabel label="Unit Rate"><NumberInput className="h-8 font-bold" value={item.price} onChange={(e) => updateItem(rIdx, iIdx, { price: toNumber(e.target.value) })} /></InputLabel>
                                 <InputLabel label="Type"><Select className="h-8 text-[10px] px-1" value={item.unitType} onChange={(e) => updateItem(rIdx, iIdx, { unitType: e.target.value as any })}>
                                   <option value="nos">NOS</option><option value="set">SET</option><option value="sqft">SQFT</option><option value="rft">RFT</option>
@@ -700,10 +707,10 @@ function QuotationBuilderContent() {
                   )}
 
                   {/* Room Footer */}
-                  <div className="px-6 py-4 bg-[var(--bg-elevated)]/20 border-t border-[var(--border-subtle)] flex items-center justify-between">
+                  <div className="px-6 py-4 bg-[#111113] border-t border-[#27272a] flex items-center justify-between">
                     <div className="flex items-center gap-6">
                       <div className="flex items-center gap-3">
-                        <span className="section-label">Room Discount</span>
+                        <span className="section-label mb-0">Room Discount</span>
                         <div className="flex gap-1.5">
                           <NumberInput className="h-8 w-20 px-2" value={room.roomDiscountValue} onChange={(e) => updateRoom(rIdx, { roomDiscountValue: toNumber(e.target.value) })} />
                           <Select className="h-8 w-24 text-[10px] px-1" value={room.roomDiscountType} onChange={(e) => updateRoom(rIdx, { roomDiscountType: e.target.value as any })}>
@@ -713,8 +720,8 @@ function QuotationBuilderContent() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="section-label mr-3">Room Net:</span>
-                      <span className="text-lg font-bold text-[var(--accent)] tabular-nums">{money(computed.summaryByRoom[rIdx]?.net)}</span>
+                      <span className="section-label mb-0 mr-3 inline-block">Room Net:</span>
+                      <span className="text-lg font-bold text-[#c8a96e] tabular-nums">{money(computed.summaryByRoom[rIdx]?.net)}</span>
                     </div>
                   </div>
                 </div>
@@ -724,10 +731,10 @@ function QuotationBuilderContent() {
 
 
           {activeTab === "finance" && (
-            <div className="max-w-3xl space-y-6 animate-slide-up">
-              <div className="card p-8">
+            <div className="max-w-3xl space-y-4 animate-slide-up">
+              <div className="card">
                 <h2 className="section-heading">Financial Adjustments</h2>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-4">
                   <InputLabel label="Global Discount">
                     <div className="flex gap-2">
                       <NumberInput value={data.charges.overallDiscountValue} onChange={(e) => updateData(p => ({ ...p, charges: { ...p.charges, overallDiscountValue: toNumber(e.target.value) }}))} />
@@ -751,27 +758,27 @@ function QuotationBuilderContent() {
                     <NumberInput value={data.charges.loadingCharge} onChange={(e) => updateData(p => ({ ...p, charges: { ...p.charges, loadingCharge: toNumber(e.target.value) }}))} />
                   </InputLabel>
                 </div>
-                <div className="mt-6 p-4 rounded-xl bg-[var(--accent-dim)] border border-[var(--accent)]/20 flex items-center justify-between">
+                <div className="mt-6 p-4 rounded-xl bg-white/5 border border-[#c8a96e]/20 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-                    <span className="text-[12px] font-semibold text-[var(--text-secondary)]">Split GST into CGST & SGST (9%+9%)</span>
+                    <div className="w-2 h-2 rounded-full bg-[#c8a96e]" />
+                    <span className="text-[12px] font-semibold text-[#a1a1aa]">Split GST into CGST & SGST (9%+9%)</span>
                   </div>
                   <button 
                     onClick={() => updateData(p => ({ ...p, charges: { ...p.charges, splitCgstSgst: !p.charges.splitCgstSgst }}))}
-                    className={`w-10 h-5 rounded-full transition-base relative ${data.charges.splitCgstSgst ? 'bg-[var(--accent)]' : 'bg-[var(--bg-elevated)]'}`}
+                    className={`w-10 h-5 rounded-full transition-all relative ${data.charges.splitCgstSgst ? 'bg-[#c8a96e]' : 'bg-[#27272a]'}`}
                   >
-                    <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-base ${data.charges.splitCgstSgst ? 'left-6' : 'left-1'}`} />
+                    <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${data.charges.splitCgstSgst ? 'left-6' : 'left-1'}`} />
                   </button>
                 </div>
               </div>
 
-              <div className="card p-8">
+              <div className="card">
                 <h2 className="section-heading">Terms & Conditions</h2>
                 <div className="space-y-4">
                   {terms.map((t, i) => (
                     <div key={i} className="flex gap-4 group items-start">
-                      <div className="w-8 h-8 rounded-lg bg-[var(--bg-elevated)] flex items-center justify-center border border-[var(--border)] shrink-0 mt-1">
-                        <span className="text-[10px] font-bold text-[var(--text-muted)]">{i+1}</span>
+                      <div className="w-8 h-8 rounded-lg bg-[#27272a] flex items-center justify-center border border-[#3f3f46] shrink-0 mt-1">
+                        <span className="text-[10px] font-bold text-[#71717a]">{i+1}</span>
                       </div>
                       <TextArea value={t} rows={2} className="text-[13px] py-3 px-4 leading-relaxed" onChange={(e) => {
                         const n = [...terms]; n[i] = e.target.value; setTerms(n);
@@ -779,7 +786,7 @@ function QuotationBuilderContent() {
                       <button onClick={() => setTerms(p => p.filter((_, idx) => idx !== i))} className="maple-btn-icon danger mt-2 opacity-0 group-hover:opacity-100">✕</button>
                     </div>
                   ))}
-                  <button onClick={() => setTerms(p => [...p, "New condition..."])} className="w-full py-4 border-2 border-dashed border-[var(--border)] rounded-xl text-[11px] font-bold uppercase tracking-widest text-[var(--text-muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-base bg-transparent">
+                  <button onClick={() => setTerms(p => [...p, "New condition..."])} className="w-full py-4 border border-dashed border-[#27272a] rounded-xl text-[10px] font-bold uppercase tracking-widest text-[#52525b] hover:border-[#c8a96e] hover:text-[#c8a96e] transition-all bg-transparent">
                     + Append New Term
                   </button>
                 </div>
@@ -789,14 +796,14 @@ function QuotationBuilderContent() {
 
           {activeTab === "payment" && (
             <div className="max-w-2xl animate-slide-up">
-              <div className="card p-8">
+              <div className="card">
                 <h2 className="section-heading">Settlement Accounts</h2>
                 <div className="space-y-6">
                   <InputLabel label="Digital Payments (UPI ID / VPA)">
                     <TextInput value={data.payment.upiId} onChange={(e) => updateData(p => ({ ...p, payment: { ...p.payment, upiId: e.target.value }}))} placeholder="e.g. maplefurnishers@axis" />
                   </InputLabel>
-                  <div className="divider" />
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="h-[1px] bg-[#27272a] my-6" />
+                  <div className="grid grid-cols-2 gap-4">
                     <InputLabel label="Bank Institution"><TextInput value={data.payment.bankName} onChange={(e) => updateData(p => ({ ...p, payment: { ...p.payment, bankName: e.target.value }}))} /></InputLabel>
                     <InputLabel label="Account Holder"><TextInput value={data.payment.accountName} onChange={(e) => updateData(p => ({ ...p, payment: { ...p.payment, accountName: e.target.value }}))} /></InputLabel>
                     <InputLabel label="Account Number"><TextInput value={data.payment.accountNumber} onChange={(e) => updateData(p => ({ ...p, payment: { ...p.payment, accountNumber: e.target.value }}))} /></InputLabel>
@@ -809,8 +816,11 @@ function QuotationBuilderContent() {
 
           {activeTab === "drafts" && (
             <div className="space-y-6 animate-slide-up">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold">Archives & Drafts</h2>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-lg font-bold text-[#fafafa]">Archives & Drafts</h2>
+                  <p className="text-[10px] text-[#71717a] uppercase tracking-widest font-bold mt-0.5">Manage saved quotations</p>
+                </div>
                 <button onClick={seedSampleData} className="maple-btn-secondary h-9 px-4 text-[11px]">+ Seed Sample Data</button>
               </div>
               
@@ -850,13 +860,13 @@ function QuotationBuilderContent() {
       </main>
 
       {/* LIVE PREVIEW PANEL */}
-      <aside className="w-[360px] border-l border-[var(--border-subtle)] bg-[var(--bg-surface)] flex flex-col overflow-hidden shrink-0">
-        <div className="p-5 border-b border-[var(--border-subtle)] bg-[var(--bg)]/50 backdrop-blur-md flex items-center justify-between sticky top-0 z-10">
+      <aside className="w-[360px] border-l border-[#1f1f1f] bg-[#111113] flex flex-col overflow-hidden shrink-0">
+        <div className="p-5 border-b border-[#1f1f1f] bg-[#09090b]/50 backdrop-blur-md flex items-center justify-between sticky top-0 z-10">
           <div>
-            <h3 className="text-[13px] font-bold">Summary & Preview</h3>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
-              <span className="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest">Real-time sync</span>
+            <h3 className="text-[11px] font-bold text-[#fafafa] uppercase tracking-wider">Summary & Preview</h3>
+            <div className="flex items-center gap-2 mt-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e]" />
+              <span className="text-[9px] font-bold text-[#52525b] uppercase tracking-widest">Real-time sync</span>
             </div>
           </div>
           <div className="flex gap-1.5">
@@ -865,25 +875,31 @@ function QuotationBuilderContent() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-5 space-y-6">
-          <div className="card p-5 bg-[var(--bg-elevated)]/30 border-[var(--border)] shadow-xl">
-            <h4 className="section-label mb-4">Financial Overview</h4>
-            <div className="space-y-0.5">
+          <div>
+            <h4 className="fin-header">Financial Overview</h4>
+            <div className="space-y-0">
               {computed.totals.lines.map(line => (
                 <div key={line.key} className={`fin-line ${line.isLast ? 'grand' : ''}`}>
                   <span className="fin-line-label">{line.label}</span>
-                  <span className={`fin-line-value ${line.isLast ? 'large' : ''} ${line.emphasis ? 'accent' : ''}`}>{money(line.value)}</span>
+                  <span className="fin-line-value">{money(line.value)}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="card overflow-hidden bg-white border-transparent">
-            <div className="px-4 py-2 bg-[#f8f9fa] border-b border-gray-100 flex items-center justify-between">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Master Proposal Preview</span>
-              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-500">DRAFT</span>
+          <div className="preview-container">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[10px] font-bold text-[#71717a] uppercase tracking-widest">Proposal Preview</span>
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#27272a] text-[#52525b]">DRAFT</span>
             </div>
-            <div className="max-h-[500px] overflow-y-auto transform origin-top hover:scale-[1.02] transition-base">
-              <LivePreviewPanel data={data} computed={computed} terms={terms} />
+            <div className="max-h-[500px] overflow-y-auto rounded-md bg-white">
+              {!data.client.name ? (
+                <div className="preview-placeholder">
+                  Fill in client details to see preview
+                </div>
+              ) : (
+                <LivePreviewPanel data={data} computed={computed} terms={terms} />
+              )}
             </div>
           </div>
         </div>
