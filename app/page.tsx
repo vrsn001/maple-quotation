@@ -551,26 +551,21 @@ function QuotationBuilderContent() {
 
         <div style={{ borderTop: '1px solid #1e1e23', padding: '24px 20px' }}>
           <div className="flex items-center justify-between mb-5">
-            <span style={{ fontSize: '13px', color: '#555560', fontWeight: 500 }}>System time</span>
+            <span style={{ fontSize: '12px', color: '#7c7c8e', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>System time</span>
             <LiveClock />
           </div>
           <div className="space-y-4">
-            <div className="flex justify-between items-center group">
-              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">Save Draft</span>
-              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃S</span>
-            </div>
-            <div className="flex justify-between items-center group">
-              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">Export PDF</span>
-              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃P</span>
-            </div>
-            <div className="flex justify-between items-center group">
-              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">Undo Change</span>
-              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃Z</span>
-            </div>
-            <div className="flex justify-between items-center group">
-              <span style={{ fontSize: '12px', color: '#888896', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">New Quote</span>
-              <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', color: '#555560', fontWeight: 700 }}>⌃N</span>
-            </div>
+            {[
+              { label: "Save Draft", key: "^S" },
+              { label: "Export PDF", key: "^P" },
+              { label: "Undo Change", key: "^Z" },
+              { label: "New Quote", key: "^N" }
+            ].map(item => (
+              <div key={item.label} className="flex justify-between items-center group cursor-pointer">
+                <span style={{ fontSize: '13px', color: '#b0b0bc', transition: 'color 0.2s' }} className="group-hover:text-[#ffffff]">{item.label}</span>
+                <span style={{ background: '#232329', border: '1px solid #38383f', borderRadius: '6px', padding: '3px 8px', fontSize: '10px', color: '#7c7c8e', fontWeight: 700 }}>{item.key}</span>
+              </div>
+            ))}
           </div>
         </div>
       </aside>
@@ -578,34 +573,26 @@ function QuotationBuilderContent() {
       {/* MAIN AREA */}
       <main className="flex-1 flex flex-col overflow-hidden relative">
         
-        {/* TOP BAR */}
         <header className="topbar">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <span style={{ color: '#555560', fontSize: '14px' }}>#</span>
-              <input
-                value={data.quote.number}
-                onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, number: e.target.value }}))}
-                style={{ background: 'transparent', border: 'none', fontSize: '15px', fontWeight: 700, color: '#ffffff', outline: 'none', width: '176px', fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}
-                placeholder="QUOTE-NO"
-              />
-            </div>
-            <div className="live-edit-badge">
-              <div className="live-edit-dot" />
-              LIVE EDITING
+          <div className="flex items-center gap-3 mr-auto">
+            <span className="text-[11px] font-bold text-[#b0b0bc] bg-[#18181b] px-3 py-1.5 rounded-lg border border-[#2e2e33]">{data.quote.number}</span>
+            <div className="w-[1px] h-4 bg-[#2e2e33]" />
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#22c55e]/5 border border-[#22c55e]/20">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+              <span className="text-[10px] font-bold text-[#22c55e] uppercase tracking-wider">Live Editing</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 mr-2">
-              <button type="button" onClick={undo} className="maple-btn-icon" title="Undo (Ctrl+Z)">↺</button>
-              <button type="button" onClick={redo} className="maple-btn-icon" title="Redo (Ctrl+Shift+Z)">↻</button>
+            <div className="flex items-center bg-[#18181b] border border-[#2e2e33] rounded-xl p-1 gap-1">
+              <button type="button" onClick={undo} className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-[#232329] text-[#b0b0bc]">⟲</button>
+              <button type="button" onClick={redo} className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-[#232329] text-[#b0b0bc]">⟳</button>
             </div>
-            
-            <button type="button" onClick={openTemplates} style={{ background: 'transparent', border: 'none', fontSize: '13px', color: '#888896', fontWeight: 500, padding: '0 8px', cursor: 'pointer', fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}>Templates</button>
-            <button type="button" onClick={shareQuote} style={{ background: 'transparent', border: 'none', fontSize: '13px', color: '#888896', fontWeight: 500, padding: '0 8px', cursor: 'pointer', fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}>Share</button>
-            <CreativeButton onClick={saveDraft} variant="secondary" className="h-8 !px-4">Save Draft</CreativeButton>
-            <CreativeButton onClick={onGeneratePdf} className="h-8 !px-4">Generate PDF</CreativeButton>
+            <button type="button" onClick={() => setShowTemplates(true)} className="text-[12px] font-bold text-[#b0b0bc] hover:text-white px-3 transition-colors">Templates</button>
+            <button type="button" onClick={shareQuote} className="text-[12px] font-bold text-[#b0b0bc] hover:text-white px-3 transition-colors">Share</button>
+            <div className="w-[1px] h-6 bg-[#2e2e33] mx-1" />
+            <CreativeButton onClick={() => { const id = makeId(); const d: Draft = { id, name: `Draft: ${data.client.name || 'Untitled'}`, savedAt: Date.now(), data }; setDrafts([d, ...drafts]); localStorage.setItem(LS_KEY_DRAFTS, JSON.stringify([d, ...drafts])); toast("Draft saved ✓"); }} variant="secondary" className="!h-9 !px-4">Save Draft</CreativeButton>
+            <CreativeButton onClick={onGeneratePdf} className="!h-9 !px-4">Generate PDF</CreativeButton>
           </div>
         </header>
 
@@ -677,29 +664,33 @@ function QuotationBuilderContent() {
               {data.rooms.map((room, rIdx) => (
                 <div key={room.id} className="card overflow-hidden" style={{ padding: 0, marginBottom: '20px' }}>
                   <div className="room-header">
-                    <div className="flex items-center flex-1">
-                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#8a3535', color: '#ffffff', fontSize: '12px', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginRight: '12px' }}>
-                        {rIdx + 1}
-                      </div>
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className="w-8 h-8 rounded-full bg-[#8a3535] text-white flex items-center justify-center text-[12px] font-bold shrink-0">{rIdx + 1}</div>
                       <input
+                        className="room-name-input !text-lg !font-bold flex-1"
                         value={room.name}
                         onChange={(e) => updateRoom(rIdx, { name: e.target.value })}
-                        className="room-name-input"
-                        placeholder="Room Name (e.g. Master Bedroom)..."
+                        placeholder="Enter Room Name..."
                       />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span style={{ background: '#232329', color: '#888896', fontSize: '11px', padding: '2px 8px', borderRadius: '20px' }}>{room.items.length} items</span>
-                      <div className="w-[1px] h-4 bg-[#2e2e33] mx-2" />
-                      <Select className="h-8 w-44 text-[10px]" onChange={(e) => {
-                        const t = TEMPLATES.find(t => t.label === e.target.value);
-                        if(t) addItem(rIdx, t);
-                      }}>
-                        <option value="">Quick Add Template...</option>
-                        {TEMPLATES.map(t => <option key={t.label} value={t.label}>{t.label}</option>)}
-                      </Select>
-                      <CreativeButton onClick={() => addItem(rIdx)} variant="secondary" className="h-8 !px-3 text-[10px]">+ Item</CreativeButton>
-                      <button onClick={() => deleteRoom(rIdx)} className="maple-btn-icon danger ml-1">✕</button>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center bg-[#0d0d0f] border border-[#2e2e33] rounded-xl px-3 h-9 gap-3">
+                        <span className="text-[10px] font-bold text-[#7c7c8e] uppercase tracking-wider">{room.items.length} Items</span>
+                        <div className="w-[1px] h-3 bg-[#2e2e33]" />
+                        <Select 
+                          className="!h-7 !border-none !bg-transparent !text-[12px] !w-40 !p-0"
+                          value="" 
+                          onChange={(e) => {
+                            const t = TEMPLATES.find(t => t.label === e.target.value);
+                            if(t) addItem(rIdx, t);
+                          }}
+                        >
+                          <option value="">Quick Add Template...</option>
+                          {TEMPLATES.map(t => <option key={t.label} value={t.label}>{t.label}</option>)}
+                        </Select>
+                      </div>
+                      <CreativeButton onClick={() => addItem(rIdx)} variant="secondary" className="!h-9 !px-4">+ Item</CreativeButton>
+                      <button onClick={() => deleteRoom(rIdx)} className="w-9 h-9 flex items-center justify-center rounded-xl bg-[#f04747]/10 text-[#f04747] border border-[#f04747]/20 hover:bg-[#f04747] hover:text-white transition-all">✕</button>
                     </div>
                   </div>
 
@@ -759,31 +750,43 @@ function QuotationBuilderContent() {
                               </div>
                             </td>
                             <td>
-                              <div className="space-y-4">
-                                <div className="grid grid-cols-2 gap-5">
-                                  <InputLabel label="Material"><TextInput className="h-7 text-[10px] px-2" value={item.material} onChange={(e) => updateItem(rIdx, iIdx, { material: e.target.value })} /></InputLabel>
-                                  <InputLabel label="Fabric"><TextInput className="h-7 text-[10px] px-2" value={item.fabric} onChange={(e) => updateItem(rIdx, iIdx, { fabric: e.target.value })} /></InputLabel>
-                                </div>
-                                <div>
-                                  <span className="section-label mb-1.5 block">Size (L × W × H)</span>
-                                  <div className="flex gap-1.5">
-                                    {(['l', 'w', 'h'] as Array<keyof NonNullable<QuoteItem['dimensions']>>).map(d => (
-                                      <NumberInput key={d} placeholder={d.toUpperCase()} className="h-7 text-[10px] px-1 text-center" value={item.dimensions?.[d]} onChange={(e) => updateItem(rIdx, iIdx, { dimensions: { ...item.dimensions!, [d]: toNumber(e.target.value) } })} />
-                                    ))}
+                                <div className="space-y-4 pr-4">
+                                  <div className="grid grid-cols-2 gap-3">
+                                    <TextInput placeholder="Material" className="!h-9 !text-[11px]" value={item.material} onChange={(e) => updateItem(rIdx, iIdx, { material: e.target.value })} />
+                                    <TextInput placeholder="Fabric" className="!h-9 !text-[11px]" value={item.fabric} onChange={(e) => updateItem(rIdx, iIdx, { fabric: e.target.value })} />
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-[10px] font-bold text-[#7c7c8e] uppercase whitespace-nowrap">Size (L×W×H)</span>
+                                    <div className="flex gap-1.5 flex-1">
+                                      {(['l', 'w', 'h'] as Array<keyof NonNullable<QuoteItem['dimensions']>>).map(d => (
+                                        <NumberInput key={d} placeholder={d.toUpperCase()} className="!h-8 !text-[10px] !px-0 text-center flex-1" value={item.dimensions?.[d]} onChange={(e) => updateItem(rIdx, iIdx, { dimensions: { ...item.dimensions!, [d]: toNumber(e.target.value) } })} />
+                                      ))}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="grid grid-cols-2 gap-5">
-                                <InputLabel label="Unit Rate"><NumberInput className="h-8 font-bold" value={item.price} onChange={(e) => updateItem(rIdx, iIdx, { price: toNumber(e.target.value) })} /></InputLabel>
-                                <InputLabel label="Type"><Select className="h-8 text-[10px] px-1" value={item.unitType} onChange={(e) => updateItem(rIdx, iIdx, { unitType: e.target.value as UnitType })}>
-                                  <option value="nos">NOS</option><option value="set">SET</option><option value="sqft">SQFT</option><option value="rft">RFT</option>
-                                </Select></InputLabel>
-                                <InputLabel label="Unit Value"><NumberInput className="h-8" value={item.unitValue} onChange={(e) => updateItem(rIdx, iIdx, { unitValue: toNumber(e.target.value) })} /></InputLabel>
-                                <InputLabel label="Quantity"><NumberInput className="h-8" value={item.quantity} onChange={(e) => updateItem(rIdx, iIdx, { quantity: toNumber(e.target.value) })} /></InputLabel>
-                              </div>
-                            </td>
+                              </td>
+                              <td>
+                                <div className="grid grid-cols-2 gap-3 pr-4">
+                                  <div className="space-y-1">
+                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Rate</span>
+                                    <NumberInput className="!h-9 !font-bold" value={item.price} onChange={(e) => updateItem(rIdx, iIdx, { price: toNumber(e.target.value) })} />
+                                  </div>
+                                  <div className="space-y-1">
+                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Type</span>
+                                    <Select className="!h-9 !text-[11px]" value={item.unitType} onChange={(e) => updateItem(rIdx, iIdx, { unitType: e.target.value as UnitType })}>
+                                      <option value="nos">NOS</option><option value="set">SET</option><option value="sqft">SQFT</option><option value="rft">RFT</option>
+                                    </Select>
+                                  </div>
+                                  <div className="space-y-1">
+                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">U.Val</span>
+                                    <NumberInput className="!h-9" value={item.unitValue} onChange={(e) => updateItem(rIdx, iIdx, { unitValue: toNumber(e.target.value) })} />
+                                  </div>
+                                  <div className="space-y-1">
+                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Qty</span>
+                                    <NumberInput className="!h-9" value={item.quantity} onChange={(e) => updateItem(rIdx, iIdx, { quantity: toNumber(e.target.value) })} />
+                                  </div>
+                                </div>
+                              </td>
                             <td className="text-right">
                               <div className="text-[14px] font-bold text-[var(--text)] tabular-nums">{money((item.price || 0) * (item.unitValue || 1) * (item.quantity || 1))}</div>
                               <button onClick={() => deleteItem(rIdx, iIdx)} className="text-[10px] text-[var(--red)] font-bold uppercase mt-6 opacity-0 group-hover:opacity-100 transition-base hover:underline">Remove</button>

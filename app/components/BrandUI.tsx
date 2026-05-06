@@ -6,12 +6,12 @@ import React, { useEffect, useState } from "react";
 export const BrandStyles = `
   /* ── INPUTS ─────────────────────────────────────────────────── */
   .maple-input {
-    background: #232329;
-    border: 1.5px solid #38383f;
+    background: #18181b;
+    border: 1px solid #2e2e33;
     color: #ffffff;
-    border-radius: 10px;
-    padding: 0 16px;
-    height: 48px;
+    border-radius: 8px;
+    padding: 0 12px;
+    height: 40px;
     font-size: 14px;
     width: 100%;
     transition: all 0.15s;
@@ -188,7 +188,8 @@ export const BrandStyles = `
     padding: 0 24px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 16px;
     position: sticky;
     top: 0;
     z-index: 50;
@@ -511,17 +512,19 @@ export const BrandStyles = `
     background: #8a3535;
     color: #ffffff;
     border-color: #8a3535;
-    height: 34px;
-    padding: 0 18px;
-    box-shadow: 0 2px 8px rgba(99,42,42,0.25);
+    height: 36px;
+    padding: 0 14px;
+    box-shadow: 0 2px 8px rgba(138,53,53,0.2);
+    font-size: 12px;
   }
   .creative-btn.primary .hover-layer { background: #7a3333; color: #ffffff; }
   .creative-btn.secondary {
     background: transparent;
     color: #e4e4e7;
     border-color: #38383f;
-    height: 34px;
-    padding: 0 16px;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 12px;
   }
   .creative-btn.secondary:hover { border-color: #888896; }
   .creative-btn.secondary .hover-layer { background: #18181b; color: #e4e4e7; }
