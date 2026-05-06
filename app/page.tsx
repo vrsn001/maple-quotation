@@ -574,8 +574,11 @@ function QuotationBuilderContent() {
       <aside className="w-[240px] flex flex-col border-r border-[#1e1e23] shrink-0 z-30" style={{ background: '#09090b' }}>
         <div className="p-8">
           <div className="flex flex-col gap-1">
-            <h1 style={{ fontSize: '18px', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', fontFamily: 'var(--font-serif)' }}>MAPLE</h1>
-            <span style={{ fontSize: '9px', fontWeight: 800, color: '#8a3535', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Quotation Suite</span>
+            <h1 style={{ fontSize: '20px', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', fontFamily: 'var(--font-serif)' }}>MAPLE</h1>
+            <div className="flex items-center gap-2">
+              <span style={{ fontSize: '9px', fontWeight: 800, color: '#8a3535', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Quotation Suite</span>
+              <span style={{ fontSize: '8px', color: '#555560', fontWeight: 700 }}>विवरण</span>
+            </div>
           </div>
         </div>
 
@@ -584,11 +587,11 @@ function QuotationBuilderContent() {
             <span style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.18em', color: '#555560', textTransform: 'uppercase' }}>Navigation</span>
           </div>
           {[
-            { id: "client", label: "Overview", icon: "▤" },
-            { id: "rooms", label: "Rooms & Items", icon: "❖" },
-            { id: "finance", label: "Finance & T&C", icon: "±" },
-            { id: "payment", label: "Settlement", icon: "💳" },
-            { id: "drafts", label: "Archives", icon: "📂" },
+            { id: "client", label: "Overview", sub: "विवरण", icon: "▤" },
+            { id: "rooms", label: "Inventory", sub: "सूची", icon: "❖" },
+            { id: "finance", label: "Commercials", sub: "वित्तीय", icon: "±" },
+            { id: "payment", label: "Settlement", sub: "भुगतान", icon: "💳" },
+            { id: "drafts", label: "Archives", sub: "संग्रह", icon: "📂" },
           ].map((item) => (
             <button
               type="button"
@@ -597,7 +600,10 @@ function QuotationBuilderContent() {
               className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
             >
               <span className="icon">{item.icon}</span>
-              {item.label}
+              <div className="flex flex-col items-start">
+                <span className="text-[12px] font-bold">{item.label}</span>
+                <span className="text-[8px] opacity-40 font-bold uppercase tracking-widest">{item.sub}</span>
+              </div>
             </button>
           ))}
         </nav>
@@ -628,7 +634,10 @@ function QuotationBuilderContent() {
         
         <header className="topbar">
           <div className="flex items-center gap-3 mr-auto">
-            <span className="text-[11px] font-bold text-[#b0b0bc] bg-[#18181b] px-3 py-1.5 rounded-lg border border-[#2e2e33]">{data.quote.number}</span>
+            <div className="flex flex-col bg-[#18181b] px-3 py-1 rounded-lg border border-[#2e2e33]">
+              <span className="text-[8px] font-black text-[#555560] uppercase tracking-widest">Document №</span>
+              <span className="text-[11px] font-bold text-[#ffffff]">{data.quote.number}</span>
+            </div>
             <div className="w-[1px] h-4 bg-[#2e2e33]" />
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#22c55e]/5 border border-[#22c55e]/20">
               <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
@@ -1045,17 +1054,25 @@ function QuotationBuilderContent() {
           {/* Financial Summary */}
           <section className="space-y-4">
             <div className="flex items-center justify-between px-1">
-              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Financial Summary</span>
-              <span className="text-[9px] font-bold text-[#555560] uppercase">{data.rooms.length} Rooms Active</span>
+              <div className="flex flex-col">
+                <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Financial Summary</span>
+                <span className="text-[8px] font-bold text-[#555560] uppercase mt-0.5">वित्तीय सारांश</span>
+              </div>
+              <span className="text-[9px] font-bold text-[#555560] uppercase tracking-tighter">SEC: {data.rooms.length} Units</span>
             </div>
             
-            <div className="bg-[#111114] rounded-2xl overflow-hidden border border-[#1e1e23]">
-              <div className="p-5 space-y-3.5">
+            <div className="bg-[#111114] rounded-2xl overflow-hidden border border-[#1e1e23] relative">
+              {/* Halftone Texture Overlay */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 0)', backgroundSize: '4px 4px' }} />
+              
+              <div className="p-5 space-y-3.5 relative">
                 {computed.totals.lines.filter(l => !l.isLast).map(line => (
-                  <div key={line.key} className="flex justify-between items-center group/line">
-                    <span className={`text-[12px] transition-colors ${line.emphasis ? 'font-bold text-white' : 'text-[#888896] group-hover/line:text-[#b0b0bc]'}`}>
-                      {line.label}
-                    </span>
+                  <div key={line.key} className="flex justify-between items-center group/line border-b border-[#ffffff]/[0.02] pb-2 last:border-0">
+                    <div className="flex flex-col">
+                      <span className={`text-[12px] transition-colors ${line.emphasis ? 'font-bold text-white' : 'text-[#888896] group-hover/line:text-[#b0b0bc]'}`}>
+                        {line.label}
+                      </span>
+                    </div>
                     <span className={`text-[12px] tabular-nums font-medium ${line.emphasis ? 'text-white' : 'text-[#e4e4e7]'}`}>
                       {money(line.value)}
                     </span>
@@ -1063,17 +1080,34 @@ function QuotationBuilderContent() {
                 ))}
               </div>
               
-              <div className="bg-[#18181b] p-6 border-t border-[#8a3535]/30">
-                <div className="flex justify-between items-center">
+              <div className="bg-[#8a3535] p-6 border-t border-[#ffffff]/10 relative overflow-hidden group/seal">
+                {/* Perforated Edge Effect */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] flex justify-between gap-1 px-1">
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <div key={i} className="w-2 h-2 rounded-full bg-[#111114] -translate-y-1/2" />
+                  ))}
+                </div>
+                
+                <div className="flex justify-between items-center relative z-10">
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-black text-[#8a3535] uppercase tracking-widest mb-1">Grand Total</span>
-                    <span className="text-[11px] text-[#555560] font-bold">Incl. all taxes & charges</span>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] font-black text-white/90 uppercase tracking-[0.2em]">Grand Total</span>
+                      <span className="text-[8px] font-bold text-white/40 uppercase">कुल योग</span>
+                    </div>
+                    <span className="text-[9px] text-white/50 font-bold uppercase tracking-widest">Official Seal of Value</span>
                   </div>
                   <div className="text-right">
-                    <div className="text-[24px] font-black text-white tabular-nums tracking-tighter">
+                    <div className="text-[26px] font-black text-white tabular-nums tracking-tighter drop-shadow-lg">
                       {money(computed.totals.grandTotal)}
                     </div>
                   </div>
+                </div>
+                
+                {/* Subtle Barcode */}
+                <div className="flex gap-[1px] mt-4 opacity-20 group-hover/seal:opacity-40 transition-opacity">
+                  {Array.from({ length: 40 }).map((_, i) => (
+                    <div key={i} style={{ width: Math.random() > 0.5 ? '1px' : '2px', height: '12px' }} className="bg-white" />
+                  ))}
                 </div>
               </div>
             </div>
