@@ -1015,74 +1015,97 @@ function QuotationBuilderContent() {
         </div>
       </main>
 
-      {/* LIVE PREVIEW PANEL (DASHBOARD) */}
-      <aside className="w-[380px] flex flex-col overflow-hidden shrink-0 z-20" style={{ background: '#09090b', borderLeft: '1px solid #1e1e23' }}>
-        <div className="p-6 border-b border-[#1e1e23] bg-[#09090b]/80 backdrop-blur-md sticky top-0 z-10">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-[13px] font-bold text-white uppercase tracking-wider">Command Center</h3>
-            <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#22c55e]/10 border border-[#22c55e]/20">
+      {/* COMMAND CENTER (RIGHT DASHBOARD) */}
+      <aside className="w-[400px] flex flex-col overflow-hidden shrink-0 z-20" style={{ background: '#09090b', borderLeft: '1px solid #1e1e23' }}>
+        <div className="p-7 border-b border-[#1e1e23] bg-[#09090b]/80 backdrop-blur-xl sticky top-0 z-10">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col">
+              <h3 className="text-[14px] font-black text-white uppercase tracking-[0.2em] font-serif">Command Center</h3>
+              <span className="text-[9px] text-[#555560] font-bold mt-1 uppercase tracking-widest">Global Action Hub</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#22c55e]/5 border border-[#22c55e]/20">
               <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
-              <span className="text-[9px] font-black text-[#22c55e] uppercase">Active</span>
+              <span className="text-[9px] font-black text-[#22c55e] uppercase tracking-tighter">Live Sync</span>
             </div>
           </div>
           
-          {/* Quick Actions Card */}
-          <div className="grid grid-cols-2 gap-2">
-            <button onClick={() => setShowTemplates(true)} className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-[#18181b] border border-[#2e2e33] hover:border-[#8a3535] transition-all group">
-              <span className="text-lg group-hover:scale-110 transition-transform">❖</span>
-              <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-tighter">Templates</span>
+          <div className="grid grid-cols-2 gap-3">
+            <button onClick={() => setShowTemplates(true)} className="flex flex-col items-start justify-between p-4 rounded-2xl bg-[#111114] border border-[#2e2e33] hover:border-[#8a3535] transition-all group h-24">
+              <span className="text-xl group-hover:scale-110 transition-transform bg-[#18181b] w-10 h-10 flex items-center justify-center rounded-xl border border-[#2e2e33]">❖</span>
+              <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-wider">Templates</span>
             </button>
-            <button onClick={shareQuote} className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-[#18181b] border border-[#2e2e33] hover:border-[#8a3535] transition-all group">
-              <span className="text-lg group-hover:scale-110 transition-transform">🔗</span>
-              <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-tighter">Share Link</span>
+            <button onClick={shareQuote} className="flex flex-col items-start justify-between p-4 rounded-2xl bg-[#111114] border border-[#2e2e33] hover:border-[#8a3535] transition-all group h-24">
+              <span className="text-xl group-hover:scale-110 transition-transform bg-[#18181b] w-10 h-10 flex items-center justify-center rounded-xl border border-[#2e2e33]">🔗</span>
+              <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-wider">Share Link</span>
             </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scroll p-6 space-y-8">
-          {/* Financial Summary Card */}
-          <div className="card !p-0 overflow-hidden !bg-transparent !border-none">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-widest">Financial Summary</span>
-              <span className="text-[10px] font-bold text-[#8a3535]">{money(computed.totals.grandTotal)}</span>
+        <div className="flex-1 overflow-y-auto custom-scroll p-7 space-y-10">
+          {/* Financial Summary */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Financial Summary</span>
+              <span className="text-[9px] font-bold text-[#555560] uppercase">{data.rooms.length} Rooms Active</span>
             </div>
             
-            <div className="space-y-1 bg-[#111114] rounded-2xl p-4 border border-[#1e1e23]">
-              {computed.totals.lines.map(line => (
-                <div
-                  key={line.key}
-                  className={`flex justify-between items-center py-2 ${line.isLast ? 'mt-4 pt-4 border-t border-[#8a3535]/30' : ''}`}
-                >
-                  <span className={`text-[12px] ${line.emphasis ? 'font-bold text-[#ffffff]' : 'text-[#888896]'}`}>
-                    {line.label}
-                  </span>
-                  <span className={`text-[12px] tabular-nums ${line.emphasis ? 'font-black text-[#8a3535]' : 'text-[#e4e4e7]'}`}>
-                    {money(line.value)}
-                  </span>
+            <div className="bg-[#111114] rounded-2xl overflow-hidden border border-[#1e1e23]">
+              <div className="p-5 space-y-3.5">
+                {computed.totals.lines.filter(l => !l.isLast).map(line => (
+                  <div key={line.key} className="flex justify-between items-center group/line">
+                    <span className={`text-[12px] transition-colors ${line.emphasis ? 'font-bold text-white' : 'text-[#888896] group-hover/line:text-[#b0b0bc]'}`}>
+                      {line.label}
+                    </span>
+                    <span className={`text-[12px] tabular-nums font-medium ${line.emphasis ? 'text-white' : 'text-[#e4e4e7]'}`}>
+                      {money(line.value)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="bg-[#18181b] p-6 border-t border-[#8a3535]/30">
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-black text-[#8a3535] uppercase tracking-widest mb-1">Grand Total</span>
+                    <span className="text-[11px] text-[#555560] font-bold">Incl. all taxes & charges</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-[24px] font-black text-white tabular-nums tracking-tighter">
+                      {money(computed.totals.grandTotal)}
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Professional Review (Live Preview) */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-widest">Professional Review</span>
-              <button onClick={onGeneratePdf} className="text-[10px] font-bold text-[#8a3535] hover:underline">Full PDF ⬈</button>
-            </div>
-            <div className="aspect-[3/4] overflow-hidden rounded-2xl bg-white shadow-2xl relative custom-scroll ring-1 ring-white/10 group">
-              {!data.client.name ? (
-                <div className="preview-placeholder">Enter Client Details</div>
-              ) : (
-                <div className="origin-top scale-[0.65] w-[153%] h-[153%] absolute top-0 left-0">
-                  <LivePreviewPanel data={data} computed={computed} terms={terms} />
-                </div>
-              )}
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                <CreativeButton onClick={onGeneratePdf} className="!rounded-full">Preview Full Proposal</CreativeButton>
               </div>
             </div>
-          </div>
+          </section>
+
+          {/* Professional Review */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Professional Review</span>
+              <button onClick={onGeneratePdf} className="text-[9px] font-black text-[#8a3535] uppercase tracking-widest hover:underline transition-base">Popout PDF ⬈</button>
+            </div>
+            
+            <div className="relative group">
+              <div className="aspect-[3/4.2] overflow-hidden rounded-2xl bg-white shadow-2xl relative ring-1 ring-white/10 group-hover:ring-[#8a3535]/50 transition-all duration-500">
+                {!data.client.name ? (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#f8f9fa] p-8 text-center">
+                    <div className="text-3xl mb-4 opacity-20">👤</div>
+                    <div className="text-[13px] font-bold text-[#1a1a1a] mb-2">Missing Client Data</div>
+                    <p className="text-[11px] text-[#7d6e63] leading-relaxed">Fill in the overview section to generate the professional proposal preview.</p>
+                  </div>
+                ) : (
+                  <div className="origin-top scale-[0.65] w-[153.8%] h-[153.8%] absolute top-0 left-0">
+                    <LivePreviewPanel data={data} computed={computed} terms={terms} />
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center backdrop-blur-[2px] gap-4">
+                  <CreativeButton onClick={onGeneratePdf} className="!rounded-full shadow-xl">Full Screen Preview</CreativeButton>
+                  <span className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Click to Expand</span>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </aside>
 
