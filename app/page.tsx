@@ -433,7 +433,7 @@ function QuotationBuilderContent() {
     <div className="flex h-screen overflow-hidden bg-[var(--bg)] text-[var(--text)]">
       
       {/* LEFT SIDEBAR */}
-      <aside className="w-[240px] flex flex-col border-r border-[#1f1f1f] bg-[#111113] shrink-0">
+      <aside className="w-[240px] flex flex-col glass-dark border-r border-[#1f1f1f] shrink-0 z-20">
         <div className="p-6 pb-2">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#c8a96e] flex items-center justify-center shadow-lg shadow-black/20">
@@ -446,7 +446,7 @@ function QuotationBuilderContent() {
           </div>
         </div>
         
-        <nav className="flex-1 px-0 mt-6 space-y-1">
+        <nav className="flex-1 px-0 mt-6 space-y-1 custom-scroll overflow-y-auto">
           <div className="px-4 mb-2">
             <span className="text-[9px] font-bold tracking-[0.15em] text-[#52525b] uppercase">Navigation</span>
           </div>
@@ -499,7 +499,7 @@ function QuotationBuilderContent() {
       <main className="flex-1 flex flex-col overflow-hidden relative">
         
         {/* TOP BAR */}
-        <header className="topbar">
+        <header className="topbar glass-dark !bg-transparent border-b border-[#1f1f1f]">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
               <span className="text-[#52525b] text-sm">#</span>
@@ -524,14 +524,14 @@ function QuotationBuilderContent() {
             
             <button type="button" onClick={openTemplates} className="bg-transparent border-none text-[#a1a1aa] text-[13px] hover:text-[#fafafa] px-2 transition-colors">Templates</button>
             <button type="button" onClick={shareQuote} className="bg-transparent border-none text-[#a1a1aa] text-[13px] hover:text-[#fafafa] px-2 transition-colors">Share</button>
-            <button type="button" onClick={saveDraft} className="maple-btn-secondary">Save Draft</button>
-            <button type="button" onClick={onGeneratePdf} className="maple-btn-primary">Generate PDF</button>
+            <CreativeButton onClick={saveDraft} variant="secondary" className="h-8 !px-4">Save Draft</CreativeButton>
+            <CreativeButton onClick={onGeneratePdf} className="h-8 !px-4">Generate PDF</CreativeButton>
           </div>
         </header>
 
 
         {/* CONTENT AREA */}
-        <div className="flex-1 overflow-y-auto p-8 space-y-8">
+        <div className="flex-1 overflow-y-auto p-8 space-y-8 custom-scroll">
           <section className="contents">
           
           {activeTab === "client" && (
@@ -586,11 +586,11 @@ function QuotationBuilderContent() {
                   <p className="text-[10px] text-[#71717a] uppercase tracking-widest font-bold mt-0.5">Allocation by Room & Category</p>
                 </div>
                 <div className="flex gap-3">
-                  <label className="maple-btn-secondary h-9 cursor-pointer">
+                  <label className="creative-btn secondary h-9 !px-4 !rounded-lg cursor-pointer">
                     <span>📥 Import Excel</span>
                     <input type="file" className="hidden" accept=".xlsx,.xls" onChange={onImportExcel} />
                   </label>
-                  <button onClick={addRoom} className="maple-btn-primary h-9">+ Create Room</button>
+                  <CreativeButton onClick={addRoom} className="h-9 !px-4 !rounded-lg">+ Create Room</CreativeButton>
                 </div>
               </div>
 
@@ -618,7 +618,7 @@ function QuotationBuilderContent() {
                         <option value="">Quick Add Template...</option>
                         {TEMPLATES.map(t => <option key={t.label} value={t.label}>{t.label}</option>)}
                       </Select>
-                      <button onClick={() => addItem(rIdx)} className="maple-btn-secondary h-8 px-3 text-[10px]">+ Item</button>
+                      <CreativeButton onClick={() => addItem(rIdx)} variant="secondary" className="h-8 !px-3 text-[10px] !rounded-lg">+ Item</CreativeButton>
                       <button onClick={() => deleteRoom(rIdx)} className="maple-btn-icon danger ml-1">✕</button>
                     </div>
                   </div>
@@ -628,7 +628,7 @@ function QuotationBuilderContent() {
                       <div className="empty-state-icon">🛋️</div>
                       <div className="empty-state-title">Room is empty</div>
                       <p className="empty-state-desc">Add items manually or use a template to populate this room with inventory.</p>
-                      <button onClick={() => addItem(rIdx)} className="maple-btn-primary h-8 px-4 mt-2">Add First Item</button>
+                      <CreativeButton onClick={() => addItem(rIdx)} className="h-8 !px-4 mt-2 !rounded-lg">Add First Item</CreativeButton>
                     </div>
                   ) : (
                   <div className="overflow-x-auto">
@@ -786,8 +786,9 @@ function QuotationBuilderContent() {
                       <button onClick={() => setTerms(p => p.filter((_, idx) => idx !== i))} className="maple-btn-icon danger mt-2 opacity-0 group-hover:opacity-100">✕</button>
                     </div>
                   ))}
-                  <button onClick={() => setTerms(p => [...p, "New condition..."])} className="w-full py-4 border border-dashed border-[#27272a] rounded-xl text-[10px] font-bold uppercase tracking-widest text-[#52525b] hover:border-[#c8a96e] hover:text-[#c8a96e] transition-all bg-transparent">
-                    + Append New Term
+                  <button onClick={() => setTerms(p => [...p, "New condition..."])} className="w-full py-4 border border-dashed border-[#27272a] rounded-xl text-[10px] font-bold uppercase tracking-widest text-[#52525b] hover:border-[#c8a96e] hover:text-[#c8a96e] transition-all bg-transparent group overflow-hidden relative">
+                    <span className="relative z-10">+ Append New Term</span>
+                    <div className="absolute inset-0 bg-[var(--accent-dim)] opacity-0 group-hover:opacity-100 transition-all" />
                   </button>
                 </div>
               </div>
@@ -820,8 +821,7 @@ function QuotationBuilderContent() {
                 <div>
                   <h2 className="text-lg font-bold text-[#fafafa]">Archives & Drafts</h2>
                   <p className="text-[10px] text-[#71717a] uppercase tracking-widest font-bold mt-0.5">Manage saved quotations</p>
-                </div>
-                <button onClick={seedSampleData} className="maple-btn-secondary h-9 px-4 text-[11px]">+ Seed Sample Data</button>
+                <CreativeButton onClick={seedSampleData} variant="secondary" className="h-9 !px-4 text-[11px] !rounded-lg">+ Seed Sample Data</CreativeButton>
               </div>
               
               {drafts.length === 0 ? (
@@ -830,8 +830,7 @@ function QuotationBuilderContent() {
                   <div className="empty-state-title text-lg">No drafts archived</div>
                   <p className="empty-state-desc">Your saved quotations will appear here for quick retrieval and versioning.</p>
                 </div>
-              ) : (
-                <div className="grid grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                   {drafts.map(d => (
                     <div key={d.id} className="draft-card group">
                       <button onClick={() => { if(confirm("Load draft?")) setData(d.data); }} className="w-full text-left">
@@ -860,12 +859,12 @@ function QuotationBuilderContent() {
       </main>
 
       {/* LIVE PREVIEW PANEL */}
-      <aside className="w-[360px] border-l border-[#1f1f1f] bg-[#111113] flex flex-col overflow-hidden shrink-0">
-        <div className="p-5 border-b border-[#1f1f1f] bg-[#09090b]/50 backdrop-blur-md flex items-center justify-between sticky top-0 z-10">
+      <aside className="w-[360px] border-l border-[#1f1f1f] glass-dark flex flex-col overflow-hidden shrink-0 z-20">
+        <div className="p-5 border-b border-[#1f1f1f] bg-white/5 backdrop-blur-xl flex items-center justify-between sticky top-0 z-10">
           <div>
             <h3 className="text-[11px] font-bold text-[#fafafa] uppercase tracking-wider">Summary & Preview</h3>
             <div className="flex items-center gap-2 mt-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e]" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
               <span className="text-[9px] font-bold text-[#52525b] uppercase tracking-widest">Real-time sync</span>
             </div>
           </div>
@@ -874,14 +873,14 @@ function QuotationBuilderContent() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5 space-y-6">
-          <div>
-            <h4 className="fin-header">Financial Overview</h4>
-            <div className="space-y-0">
+        <div className="flex-1 overflow-y-auto p-5 space-y-8 custom-scroll">
+          <div className="space-y-4">
+            <h4 className="fin-header">Financial Summary</h4>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
               {computed.totals.lines.map(line => (
-                <div key={line.key} className={`fin-line ${line.isLast ? 'grand' : ''}`}>
-                  <span className="fin-line-label">{line.label}</span>
-                  <span className="fin-line-value">{money(line.value)}</span>
+                <div key={line.key} className={`flex justify-between items-center ${line.isLast ? 'pt-4 mt-2 border-t border-white/10' : ''}`}>
+                  <span className={`text-[11px] ${line.isLast ? 'font-bold text-[#fafafa]' : 'text-[#71717a]'}`}>{line.label}</span>
+                  <span className={`text-[13px] tabular-nums ${line.isLast ? 'font-black text-[var(--accent)] text-lg' : 'font-medium text-[#fafafa]'}`}>{money(line.value)}</span>
                 </div>
               ))}
             </div>
@@ -892,7 +891,8 @@ function QuotationBuilderContent() {
               <span className="text-[10px] font-bold text-[#71717a] uppercase tracking-widest">Proposal Preview</span>
               <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#27272a] text-[#52525b]">DRAFT</span>
             </div>
-            <div className="max-h-[500px] overflow-y-auto rounded-md bg-white">
+            <div className="max-h-[500px] overflow-y-auto rounded-lg bg-white shadow-2xl relative custom-scroll ring-1 ring-black/10">
+              <div className="absolute inset-0 pointer-events-none border-[12px] border-white/10 mix-blend-overlay" />
               {!data.client.name ? (
                 <div className="preview-placeholder">
                   Fill in client details to see preview
@@ -939,15 +939,15 @@ function QuotationBuilderContent() {
                       </div>
                     </div>
                   </div>
-                  <p className="text-[12px] text-[var(--text-secondary)] mb-5 leading-relaxed">Includes {temp.desc}. Perfect for quick estimates.</p>
-                  <button onClick={() => applyTemplate(temp.type as any)} className="maple-btn-template w-full">Apply Template</button>
-                </div>
-              ))}
-            </div>
-
-            <div className="modal-footer">
-              <button onClick={() => setShowTemplates(false)} className="maple-btn-secondary h-9 px-6">Close</button>
-            </div>
+                    <p className="text-[12px] text-[var(--text-secondary)] mb-5 leading-relaxed">Includes {temp.desc}. Perfect for quick estimates.</p>
+                    <CreativeButton onClick={() => applyTemplate(temp.type as any)} className="w-full !rounded-xl !h-10">Apply Template</CreativeButton>
+                  </div>
+                ))}
+              </div>
+  
+              <div className="modal-footer">
+                <CreativeButton onClick={() => setShowTemplates(false)} variant="secondary" className="h-10 !px-8 !rounded-xl">Close</CreativeButton>
+              </div>
           </div>
         </div>
       )}

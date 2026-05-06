@@ -257,6 +257,91 @@ export const BrandStyles = `
     justify-content: center;
     height: 160px;
   }
+
+  /* ── DRAFT CARDS ─────────────────────────────────────────────── */
+  .draft-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+  }
+  .draft-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.5);
+  }
+  .draft-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .draft-card:hover::before { opacity: 1; }
+
+  /* ── CREATIVE BUTTON ANIMATIONS ──────────────────────────────── */
+  .creative-btn {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+  }
+  
+  .creative-btn .text-wrapper {
+    display: inline-block;
+    transition: all 0.3s var(--ease-out);
+  }
+  
+  .creative-btn:hover .text-wrapper {
+    transform: translateY(-150%);
+    opacity: 0;
+  }
+  
+  .creative-btn .hover-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s var(--ease-out);
+    background: var(--accent);
+    color: #000;
+  }
+  
+  .creative-btn:hover .hover-layer {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .creative-btn.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+  .creative-btn.primary .hover-layer { background: var(--accent-hover); }
+  
+  .creative-btn.secondary { background: var(--bg-surface); color: var(--text-secondary); }
+  .creative-btn.secondary:hover { color: #000; }
+  
+  .creative-btn.outline { background: transparent; color: var(--text); border-color: var(--border); }
+  .creative-btn.outline .hover-layer { background: var(--bg-elevated); color: var(--text); }
+  
+  .creative-btn.danger .hover-layer { background: var(--red); color: white; }
+  .creative-btn.danger:hover { border-color: var(--red); }
 `;
 
 /* ═══════════════════════════════════════════════════════════════
@@ -327,3 +412,40 @@ export const Select = (props: React.SelectHTMLAttributes<HTMLSelectElement>) => 
 export const TextArea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
   <textarea {...props} className={`maple-input ${props.className ?? ""}`} />
 );
+
+/** 
+ * CREATIVE BUTTON
+ * Implements the sliding text effect for a premium feel
+ */
+export const CreativeButton = ({ 
+  children, 
+  onClick, 
+  variant = "primary", 
+  className = "", 
+  icon,
+  type = "button"
+}: { 
+  children: React.ReactNode; 
+  onClick?: () => void; 
+  variant?: "primary" | "secondary" | "danger" | "outline"; 
+  className?: string;
+  icon?: React.ReactNode;
+  type?: "button" | "submit";
+}) => {
+  return (
+    <button 
+      type={type}
+      onClick={onClick}
+      className={`creative-btn ${variant} ${className} group rounded-full px-5 py-2`}
+    >
+      <span className="text-wrapper flex items-center gap-2">
+        {icon}
+        {children}
+      </span>
+      <div className="hover-layer font-bold flex items-center gap-2">
+        {icon}
+        {children}
+      </div>
+    </button>
+  );
+};
