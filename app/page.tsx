@@ -20,7 +20,7 @@ import { TEMPLATES } from "./lib/constants";
 import { MasterProposalPdf } from "./components/PdfCatalog";
 import { 
   LiveClock, InputLabel, TextInput, Select, TextArea, 
-  NumberInput, BrandStyles 
+  NumberInput, BrandStyles, CreativeButton
 } from "./components/BrandUI";
 
 const LS_KEY_DRAFTS = "mapleQuotation.drafts.v1";
@@ -821,6 +821,7 @@ function QuotationBuilderContent() {
                 <div>
                   <h2 className="text-lg font-bold text-[#fafafa]">Archives & Drafts</h2>
                   <p className="text-[10px] text-[#71717a] uppercase tracking-widest font-bold mt-0.5">Manage saved quotations</p>
+                </div>
                 <CreativeButton onClick={seedSampleData} variant="secondary" className="h-9 !px-4 text-[11px] !rounded-lg">+ Seed Sample Data</CreativeButton>
               </div>
               
@@ -830,6 +831,7 @@ function QuotationBuilderContent() {
                   <div className="empty-state-title text-lg">No drafts archived</div>
                   <p className="empty-state-desc">Your saved quotations will appear here for quick retrieval and versioning.</p>
                 </div>
+              ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                   {drafts.map(d => (
                     <div key={d.id} className="draft-card group">
