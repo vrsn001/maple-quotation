@@ -1020,8 +1020,8 @@ function QuotationBuilderContent() {
 
       {/* COMMAND CENTER (RIGHT DASHBOARD) */}
       <aside className="w-[400px] flex flex-col overflow-hidden shrink-0 z-20" style={{ background: '#09090b', borderLeft: '1px solid #1e1e23' }}>
-        <div className="p-7 border-b border-[#1e1e23] bg-[#09090b]/80 backdrop-blur-xl sticky top-0 z-10">
-          <div className="flex items-center justify-between mb-6">
+        <div className="p-6 border-b border-[#1e1e23] bg-[#09090b]/80 backdrop-blur-xl sticky top-0 z-10">
+          <div className="flex items-center justify-between mb-5">
             <div className="flex flex-col">
               <h3 className="text-[14px] font-black text-white uppercase tracking-[0.2em] font-serif">Command Center</h3>
               <span className="text-[9px] text-[#555560] font-bold mt-1 uppercase tracking-widest">Global Action Hub</span>
@@ -1032,46 +1032,44 @@ function QuotationBuilderContent() {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-3">
-            <button onClick={() => setShowTemplates(true)} className="flex flex-col items-start justify-between p-4 rounded-2xl bg-[#111114] border border-[#2e2e33] hover:border-[#8a3535] transition-all group h-24">
-              <span className="text-xl group-hover:scale-110 transition-transform bg-[#18181b] w-10 h-10 flex items-center justify-center rounded-xl border border-[#2e2e33]">❖</span>
+          <div className="flex gap-3">
+            <button onClick={() => setShowTemplates(true)} className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-[#111114] border border-[#1e1e23] hover:border-[#8a3535] hover:bg-[#18181b] transition-all group">
+              <span className="text-sm group-hover:scale-110 transition-transform">❖</span>
               <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-wider">Templates</span>
             </button>
-            <button onClick={shareQuote} className="flex flex-col items-start justify-between p-4 rounded-2xl bg-[#111114] border border-[#2e2e33] hover:border-[#8a3535] transition-all group h-24">
-              <span className="text-xl group-hover:scale-110 transition-transform bg-[#18181b] w-10 h-10 flex items-center justify-center rounded-xl border border-[#2e2e33]">🔗</span>
+            <button onClick={shareQuote} className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-[#111114] border border-[#1e1e23] hover:border-[#8a3535] hover:bg-[#18181b] transition-all group">
+              <span className="text-sm group-hover:scale-110 transition-transform">🔗</span>
               <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-wider">Share Link</span>
             </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scroll p-7 space-y-10">
+        <div className="flex-1 overflow-y-auto custom-scroll p-6 space-y-6">
           {/* Financial Summary */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between px-1">
+          <section className="bg-[#111114] rounded-xl overflow-hidden border border-[#1e1e23] flex flex-col">
+            <div className="bg-[#18181b] p-4 px-5 border-b border-[#1e1e23] flex justify-between items-center">
               <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Financial Summary</span>
               <span className="text-[9px] font-bold text-[#555560] uppercase tracking-tighter">SEC: {data.rooms.length} Units</span>
             </div>
             
-            <div className="bg-[#111114] rounded-2xl overflow-hidden border border-[#1e1e23] relative">
+            <div className="relative">
               {/* Halftone Texture Overlay */}
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 0)', backgroundSize: '4px 4px' }} />
               
-              <div className="p-5 space-y-3.5 relative">
+              <div className="p-5 pl-5 pr-6 space-y-3.5 relative">
                 {computed.totals.lines.filter(l => !l.isLast).map(line => (
                   <div key={line.key} className="flex justify-between items-center group/line border-b border-[#ffffff]/[0.02] pb-2 last:border-0">
-                    <div className="flex flex-col">
-                      <span className={`text-[12px] transition-colors ${line.emphasis ? 'font-bold text-white' : 'text-[#888896] group-hover/line:text-[#b0b0bc]'}`}>
-                        {line.label}
-                      </span>
-                    </div>
-                    <span className={`text-[12px] tabular-nums font-medium ${line.emphasis ? 'text-white' : 'text-[#e4e4e7]'}`}>
+                    <span className={`text-[12px] transition-colors ${line.emphasis ? 'font-bold text-white' : 'text-[#888896] group-hover/line:text-[#b0b0bc]'}`}>
+                      {line.label}
+                    </span>
+                    <span className={`text-[12px] tabular-nums font-medium text-right min-w-[80px] ${line.emphasis ? 'text-white' : 'text-[#e4e4e7]'}`}>
                       {money(line.value)}
                     </span>
                   </div>
                 ))}
               </div>
               
-              <div className="bg-[#8a3535] p-6 border-t border-[#ffffff]/10 relative overflow-hidden group/seal">
+              <div className="bg-[#8a3535] p-5 pl-5 pr-6 border-t border-[#ffffff]/10 relative overflow-hidden group/seal">
                 {/* Perforated Edge Effect */}
                 <div className="absolute top-0 left-0 right-0 h-[2px] flex justify-between gap-1 px-1">
                   {Array.from({ length: 20 }).map((_, i) => (
@@ -1084,8 +1082,8 @@ function QuotationBuilderContent() {
                     <span className="text-[10px] font-black text-white/90 uppercase tracking-[0.2em] mb-1">Grand Total</span>
                     <span className="text-[9px] text-white/50 font-bold uppercase tracking-widest">Official Seal of Value</span>
                   </div>
-                  <div className="text-right">
-                    <div className="text-[26px] font-black text-white tabular-nums tracking-tighter drop-shadow-lg">
+                  <div className="text-right flex-1 flex justify-end">
+                    <div className="text-[24px] font-black text-white tabular-nums tracking-tighter drop-shadow-lg">
                       {money(computed.totals.grandTotal)}
                     </div>
                   </div>
@@ -1102,14 +1100,14 @@ function QuotationBuilderContent() {
           </section>
 
           {/* Professional Review */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between px-1">
+          <section className="bg-[#111114] rounded-xl overflow-hidden border border-[#1e1e23] flex flex-col">
+            <div className="bg-[#18181b] p-4 px-5 border-b border-[#1e1e23] flex justify-between items-center">
               <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Professional Review</span>
               <button onClick={onGeneratePdf} className="text-[9px] font-black text-[#8a3535] uppercase tracking-widest hover:underline transition-base">Popout PDF ⬈</button>
             </div>
             
-            <div className="relative group">
-              <div className="aspect-[3/4.2] overflow-hidden rounded-2xl bg-white shadow-2xl relative ring-1 ring-white/10 group-hover:ring-[#8a3535]/50 transition-all duration-500">
+            <div className="p-4 relative group">
+              <div className="aspect-[3/4.2] overflow-hidden rounded-lg bg-white shadow-2xl relative ring-1 ring-white/10 group-hover:ring-[#8a3535]/50 transition-all duration-500">
                 {!data.client.name ? (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#f8f9fa] p-8 text-center">
                     <div className="text-3xl mb-4 opacity-20">👤</div>
