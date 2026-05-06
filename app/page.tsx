@@ -435,7 +435,7 @@ function QuotationBuilderContent() {
       <aside className="w-[220px] flex flex-col shrink-0 z-20" style={{ background: '#111114', borderRight: '1px solid #1e1e23' }}>
         <div style={{ padding: '20px 16px 16px' }}>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#c8a96e] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#632a2a] flex items-center justify-center">
               <img src={MAPLE_LOGO_B64} alt="Logo" className="w-6 h-6 object-contain brightness-0" />
             </div>
             <div style={{ marginTop: '10px' }}>
@@ -505,7 +505,7 @@ function QuotationBuilderContent() {
               <input
                 value={data.quote.number}
                 onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, number: e.target.value }}))}
-                style={{ background: 'transparent', border: 'none', fontSize: '15px', fontWeight: 700, color: '#ffffff', outline: 'none', width: '176px', fontFamily: 'Inter, system-ui, sans-serif' }}
+                style={{ background: 'transparent', border: 'none', fontSize: '15px', fontWeight: 700, color: '#ffffff', outline: 'none', width: '176px', fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}
                 placeholder="QUOTE-NO"
               />
             </div>
@@ -521,8 +521,8 @@ function QuotationBuilderContent() {
               <button type="button" onClick={redo} className="maple-btn-icon" title="Redo (Ctrl+Shift+Z)">↻</button>
             </div>
             
-            <button type="button" onClick={openTemplates} style={{ background: 'transparent', border: 'none', fontSize: '13px', color: '#888896', fontWeight: 500, padding: '0 8px', cursor: 'pointer', fontFamily: 'Inter, system-ui, sans-serif' }}>Templates</button>
-            <button type="button" onClick={shareQuote} style={{ background: 'transparent', border: 'none', fontSize: '13px', color: '#888896', fontWeight: 500, padding: '0 8px', cursor: 'pointer', fontFamily: 'Inter, system-ui, sans-serif' }}>Share</button>
+            <button type="button" onClick={openTemplates} style={{ background: 'transparent', border: 'none', fontSize: '13px', color: '#888896', fontWeight: 500, padding: '0 8px', cursor: 'pointer', fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}>Templates</button>
+            <button type="button" onClick={shareQuote} style={{ background: 'transparent', border: 'none', fontSize: '13px', color: '#888896', fontWeight: 500, padding: '0 8px', cursor: 'pointer', fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}>Share</button>
             <CreativeButton onClick={saveDraft} variant="secondary" className="h-8 !px-4">Save Draft</CreativeButton>
             <CreativeButton onClick={onGeneratePdf} className="h-8 !px-4">Generate PDF</CreativeButton>
           </div>
@@ -579,7 +579,7 @@ function QuotationBuilderContent() {
 
           {activeTab === "rooms" && (
             <div className="space-y-6 animate-slide-up">
-              <div className="card flex items-center justify-between" style={{ padding: '20px 28px' }}>
+              <div style={{ background: '#18181b', border: '1px solid #2e2e33', borderRadius: '16px', padding: '20px 24px', marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div>
                   <h2 style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff' }}>Project Inventory</h2>
                   <p style={{ fontSize: '12px', color: '#888896', marginTop: '4px' }}>Allocation by Room & Category</p>
@@ -597,7 +597,7 @@ function QuotationBuilderContent() {
                 <div key={room.id} className="card overflow-hidden" style={{ padding: 0, marginBottom: '20px' }}>
                   <div className="room-header">
                     <div className="flex items-center flex-1">
-                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#c8a96e', color: '#000', fontSize: '12px', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginRight: '12px' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#632a2a', color: '#ffffff', fontSize: '12px', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginRight: '12px' }}>
                         {rIdx + 1}
                       </div>
                       <input
@@ -717,7 +717,7 @@ function QuotationBuilderContent() {
                     </div>
                     <div className="text-right">
                       <span className="section-label mb-0 mr-3 inline-block">Room Net:</span>
-                      <span className="text-lg font-bold text-[#c8a96e] tabular-nums">{money(computed.summaryByRoom[rIdx]?.net)}</span>
+                      <span className="text-lg font-bold text-[#632a2a] tabular-nums">{money(computed.summaryByRoom[rIdx]?.net)}</span>
                     </div>
                   </div>
                 </div>
@@ -754,14 +754,14 @@ function QuotationBuilderContent() {
                     <NumberInput value={data.charges.loadingCharge} onChange={(e) => updateData(p => ({ ...p, charges: { ...p.charges, loadingCharge: toNumber(e.target.value) }}))} />
                   </InputLabel>
                 </div>
-                <div className="mt-6 p-4 rounded-xl flex items-center justify-between" style={{ background: 'rgba(200,169,110,0.05)', border: '1px solid rgba(200,169,110,0.15)' }}>
+                <div className="mt-6 p-4 rounded-xl flex items-center justify-between" style={{ background: 'rgba(99,42,42,0.05)', border: '1px solid rgba(99,42,42,0.15)' }}>
                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-[#c8a96e]" />
+                    <div className="w-2 h-2 rounded-full bg-[#632a2a]" />
                     <span className="text-[12px] font-semibold text-[#88889a]">Split GST into CGST & SGST (9%+9%)</span>
                   </div>
                   <button 
                     onClick={() => updateData(p => ({ ...p, charges: { ...p.charges, splitCgstSgst: !p.charges.splitCgstSgst }}))}
-                    className={`w-10 h-5 rounded-full transition-all relative ${data.charges.splitCgstSgst ? 'bg-[#c8a96e]' : 'bg-[#22223a]'}`}
+                    className={`w-10 h-5 rounded-full transition-all relative ${data.charges.splitCgstSgst ? 'bg-[#632a2a]' : 'bg-[#22223a]'}`}
                   >
                     <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${data.charges.splitCgstSgst ? 'left-6' : 'left-1'}`} />
                   </button>
@@ -776,13 +776,17 @@ function QuotationBuilderContent() {
                       <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-1" style={{ background: '#232329', border: '1px solid #38383f' }}>
                         <span style={{ fontSize: '10px', fontWeight: 700, color: '#888896' }}>{i+1}</span>
                       </div>
-                      <TextArea value={t} rows={2} className="text-[13px] leading-relaxed" onChange={(e) => {
-                        const n = [...terms]; n[i] = e.target.value; setTerms(n);
-                      }} />
+                      <TextArea 
+                        value={t} 
+                        style={{ height: '44px', minHeight: '44px', maxHeight: '44px', padding: '12px 14px', overflowY: 'hidden', resize: 'none', fontSize: '13px', lineHeight: '1.4' }}
+                        onChange={(e) => {
+                          const n = [...terms]; n[i] = e.target.value; setTerms(n);
+                        }} 
+                      />
                       <button onClick={() => setTerms(p => p.filter((_, idx) => idx !== i))} className="maple-btn-icon danger mt-2 opacity-0 group-hover:opacity-100">✕</button>
                     </div>
                   ))}
-                  <button onClick={() => setTerms(p => [...p, "New condition..."])} style={{ width: '100%', padding: '14px', border: '1px dashed #2e2e33', borderRadius: '10px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#555560', background: 'transparent', cursor: 'pointer', fontFamily: 'Inter, system-ui, sans-serif' }}>
+                  <button onClick={() => setTerms(p => [...p, "New condition..."])} style={{ width: '100%', padding: '14px', border: '1px dashed #2e2e33', borderRadius: '10px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#555560', background: 'transparent', cursor: 'pointer', fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}>
                     + Append New Term
                   </button>
                 </div>
@@ -832,7 +836,7 @@ function QuotationBuilderContent() {
                         <div className="flex justify-between items-start mb-3">
                           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style={{ background: '#232329', border: '1px solid #38383f' }}>📄</div>
                           <div className="text-right">
-                            <div style={{ fontSize: '14px', fontWeight: 700, color: '#c8a96e' }}>{money(computeTotals(d.data).totals.grandTotal)}</div>
+                            <div style={{ fontSize: '14px', fontWeight: 700, color: '#632a2a' }}>{money(computeTotals(d.data).totals.grandTotal)}</div>
                             <div style={{ fontSize: '9px', color: '#888896', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginTop: '4px' }}>{d.data.rooms.length} Rooms</div>
                           </div>
                         </div>
@@ -879,14 +883,26 @@ function QuotationBuilderContent() {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    padding: line.isLast ? '14px 0 0' : '8px 0',
+                    padding: line.isLast ? '12px 0 0' : '7px 0',
                     marginTop: line.isLast ? '4px' : 0,
-                    borderBottom: line.isLast ? 'none' : '1px solid #1f1f23',
-                    borderTop: line.isLast ? '2px solid #2e2e33' : 'none',
+                    borderBottom: line.isLast ? 'none' : '1px solid #1a1a1f',
+                    borderTop: line.isLast ? '1px solid #2e2e33' : 'none',
                   }}
                 >
-                  <span style={{ fontSize: line.isLast ? '15px' : '13px', fontWeight: line.isLast ? 700 : 400, color: line.isLast ? '#ffffff' : '#888896' }}>{line.label}</span>
-                  <span style={{ fontSize: line.isLast ? '18px' : '13px', fontWeight: line.isLast ? 800 : 500, color: line.isLast ? '#c8a96e' : '#e4e4e7' }} className="tabular-nums">{money(line.value)}</span>
+                  <span style={{ 
+                    fontSize: line.isLast ? '16px' : '13px', 
+                    fontWeight: line.isLast ? 800 : 400, 
+                    color: line.isLast ? '#632a2a' : '#888896' 
+                  }}>
+                    {line.label}
+                  </span>
+                  <span style={{ 
+                    fontSize: line.isLast ? '16px' : '13px', 
+                    fontWeight: line.isLast ? 800 : 500, 
+                    color: line.isLast ? '#632a2a' : '#e4e4e7' 
+                  }} className="tabular-nums">
+                    {money(line.value)}
+                  </span>
                 </div>
               ))}
             </div>
