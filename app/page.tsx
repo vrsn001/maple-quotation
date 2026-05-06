@@ -568,10 +568,14 @@ function QuotationBuilderContent() {
   }
 
   return (
-            <div style={{ marginTop: '10px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff' }}>Maple Furnishers</div>
-              <div style={{ fontSize: '11px', color: '#888896', marginTop: '2px' }}>Quotation Suite</div>
-            </div>
+    <div className="flex h-screen overflow-hidden font-outfit" style={{ background: '#09090b', color: '#f4f4f5' }}>
+      
+      {/* SIDEBAR NAVIGATION */}
+      <aside className="w-[240px] flex flex-col border-r border-[#1e1e23] shrink-0 z-30" style={{ background: '#09090b' }}>
+        <div className="p-8">
+          <div className="flex flex-col gap-1">
+            <h1 style={{ fontSize: '18px', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', fontFamily: 'var(--font-serif)' }}>MAPLE</h1>
+            <span style={{ fontSize: '9px', fontWeight: 800, color: '#8a3535', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Quotation Suite</span>
           </div>
         </div>
 
