@@ -1,6 +1,24 @@
 export type UnitType = "nos" | "set" | "sqft" | "rft" | "lft" | "mtr";
 export type DiscountType = "flat" | "percent";
 export type GstMode = "excluded" | "included";
+export type TotalsLine = { key: string; label: string; value: number; emphasis?: boolean; isLast?: boolean };
+export type TotalsResult = {
+  summaryByRoom: Array<{ id: string; name: string; gross: number; itemDisc: number; roomDisc: number; net: number }>;
+  totals: {
+    subtotalGross: number;
+    discountItems: number;
+    discountRooms: number;
+    discountOverall: number;
+    amountAfterDiscount: number;
+    packing: number;
+    loading: number;
+    gst: number;
+    cgst: number;
+    sgst: number;
+    grandTotal: number;
+    lines: TotalsLine[];
+  };
+};
 
 export type QuoteItem = {
   id: string;

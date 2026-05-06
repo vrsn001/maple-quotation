@@ -1,4 +1,4 @@
-import { QuoteData, QuoteItem, QuoteRoom, DiscountType, UnitType, Draft, QuoteMeta, CompanyPayment } from "./types";
+import { QuoteData, QuoteItem, QuoteRoom, DiscountType, UnitType, Draft, QuoteMeta, CompanyPayment, TotalsResult, TotalsLine } from "./types";
 
 export const INR = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -59,7 +59,7 @@ export function quickConvert(value: number, from: keyof typeof UNIT_CONVERSION) 
   return Math.round(value * UNIT_CONVERSION[from]);
 }
 
-export function computeTotals(data: QuoteData) {
+export function computeTotals(data: QuoteData): TotalsResult {
   const summaryByRoom = data.rooms.map((room) => {
     const gross = room.items.reduce((s, it) => s + (it.price || 0) * (it.unitValue || 1) * (it.quantity || 0), 0);
     const itemDisc = room.items.reduce(
@@ -96,7 +96,7 @@ export function computeTotals(data: QuoteData) {
   const cgst = data.charges.splitCgstSgst ? gst / 2 : 0;
   const sgst = data.charges.splitCgstSgst ? gst / 2 : 0;
 
-  const lines: Array<{ key: string; label: string; value: number; emphasis?: boolean; isLast?: boolean }> = [
+  const lines: TotalsLine[] = [
     { key: "subtotal", label: "Subtotal (gross)", value: subtotalGross },
     { key: "disc-items", label: "Less: Item discounts", value: -discountItems },
     { key: "disc-rooms", label: "Less: Room discounts", value: -discountRooms },

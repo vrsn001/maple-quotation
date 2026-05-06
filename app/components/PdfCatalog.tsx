@@ -4,7 +4,7 @@ import {
 } from "@react-pdf/renderer";
 import { MAPLE_LOGO_B64 } from "../maple-logo-b64";
 import { money, discountAmount } from "../lib/utils";
-import { QuoteData } from "../lib/types";
+import { QuoteData, TotalsResult, TotalsLine } from "../lib/types";
 
 /**
  * MASTER PROPOSAL PDF
@@ -145,7 +145,7 @@ const WatermarkedImage = ({ src }: { src?: string }) => (
   </View>
 );
 
-export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; computed: any; terms: string[] }) {
+export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; computed: TotalsResult; terms: string[] }) {
   const { client, quote, rooms } = data;
   const { totals } = computed;
 
@@ -242,7 +242,7 @@ export function MasterProposalPdf({ data, computed, terms }: { data: QuoteData; 
 
         <View wrap={false} style={styles.summaryTable}>
           <Text style={styles.summaryTitle}>Financial Summary</Text>
-          {totals.lines.map((line: any) => (
+          {totals.lines.map((line: TotalsLine) => (
             <View key={line.key} style={styles.summaryRow}>
               <Text style={{ fontSize: 9, color: line.emphasis ? "#632a2a" : "#666", fontFamily: line.emphasis ? 'Helvetica-Bold' : "Helvetica" }}>{line.label}</Text>
               <Text style={{ fontSize: 10, color: line.emphasis ? "#632a2a" : "#1a1a1a", fontFamily: 'Helvetica-Bold' }}>{money(line.value)}</Text>
