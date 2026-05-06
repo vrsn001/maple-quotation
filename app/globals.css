@@ -4,14 +4,14 @@
 /* ─── DESIGN TOKENS ──────────────────────────────────────────── */
 :root {
   /* Backgrounds */
-  --bg:           #08080b;
-  --bg-surface:   #111115;
-  --bg-elevated:  #1c1c22;
-  --bg-hover:     #22222a;
+  --bg:           #0d0d0f;
+  --bg-surface:   #18181b;
+  --bg-elevated:  #232329;
+  --bg-hover:     #2e2e33;
 
   /* Borders */
-  --border:        #2e2e38;
-  --border-subtle: #1f1f28;
+  --border:        #2e2e33;
+  --border-subtle: #1e1e23;
   --border-focus:  rgba(200,169,110,0.55);
 
   /* Text */
