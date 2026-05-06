@@ -362,9 +362,18 @@ function QuotationBuilderContent() {
           }
         }
 
-        // 3. Map to Rooms/Items
+        // 3. Map to Rooms/Items & Metadata
         const newRooms: QuoteRoom[] = [newRoom("Imported Inventory")];
+        const metadata: any = {};
+        
         rows.forEach((row, idx) => {
+          // Check for global metadata in any row
+          if (row['Client Name'] || row['client_name']) metadata.clientName = String(row['Client Name'] || row['client_name']);
+          if (row['Phone'] || row['phone']) metadata.phone = String(row['Phone'] || row['phone']);
+          if (row['Address'] || row['address']) metadata.address = String(row['Address'] || row['address']);
+          if (row['Site'] || row['site'] || row['Project']) metadata.siteName = String(row['Site'] || row['site'] || row['Project']);
+          if (row['Quote No'] || row['quote_no']) metadata.quoteNo = String(row['Quote No'] || row['quote_no']);
+
           newRooms[0].items.push(newItem({
             category: String(row.Category || row.category || row.Item || "New Item"),
             description: String(row.Description || row.description || ""),
@@ -372,12 +381,26 @@ function QuotationBuilderContent() {
             quantity: toNumber(row.Quantity || row.quantity || row.Qty || 1),
             unitType: (row.Unit || row.unit || "nos") as UnitType,
             material: String(row.Material || row.material || ""),
-            imageUrl: images[idx] || "" // Attempt to map image by index
+            imageUrl: images[idx] || ""
           }));
         });
 
-        updateData(prev => ({ ...prev, rooms: [...prev.rooms, ...newRooms] }));
-        toast(`Imported ${rows.length} items with ${images.length} images ✓`);
+        updateData(prev => ({ 
+          ...prev, 
+          client: {
+            ...prev.client,
+            name: metadata.clientName || prev.client.name,
+            phone: metadata.phone || prev.client.phone,
+            address: metadata.address || prev.client.address,
+          },
+          quote: {
+            ...prev.quote,
+            number: metadata.quoteNo || prev.quote.number,
+            siteName: metadata.siteName || prev.quote.siteName,
+          },
+          rooms: [...prev.rooms, ...newRooms] 
+        }));
+        toast(`Imported ${rows.length} items with metadata ✓`);
       } catch (err) {
         console.error(err);
         toast("Excel import failed", "error");
@@ -545,15 +568,6 @@ function QuotationBuilderContent() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0d0d0f] text-[var(--text)]">
-
-      {/* LEFT SIDEBAR */}
-      <aside className="w-[220px] flex flex-col shrink-0 z-20" style={{ background: '#111114', borderRight: '1px solid #1e1e23' }}>
-        <div style={{ padding: '20px 16px 16px' }}>
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#8a3535] flex items-center justify-center">
-              <img src={MAPLE_LOGO_B64} alt="Logo" className="w-6 h-6 object-contain brightness-0" />
-            </div>
             <div style={{ marginTop: '10px' }}>
               <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff' }}>Maple Furnishers</div>
               <div style={{ fontSize: '11px', color: '#888896', marginTop: '2px' }}>Quotation Suite</div>
@@ -997,50 +1011,48 @@ function QuotationBuilderContent() {
         </div>
       </main>
 
-      {/* LIVE PREVIEW PANEL */}
-      <aside className="w-[360px] flex flex-col overflow-hidden shrink-0 z-20" style={{ background: '#0d0d0f', borderLeft: '1px solid #1e1e23' }}>
-        <div className="p-5 flex items-center justify-between sticky top-0 z-10" style={{ borderBottom: '1px solid #1e1e23', background: '#0d0d0f' }}>
-          <div>
-            <h3 style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff' }}>Summary & Preview</h3>
-            <div className="flex items-center gap-2 mt-1">
+      {/* LIVE PREVIEW PANEL (DASHBOARD) */}
+      <aside className="w-[380px] flex flex-col overflow-hidden shrink-0 z-20" style={{ background: '#09090b', borderLeft: '1px solid #1e1e23' }}>
+        <div className="p-6 border-b border-[#1e1e23] bg-[#09090b]/80 backdrop-blur-md sticky top-0 z-10">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-[13px] font-bold text-white uppercase tracking-wider">Command Center</h3>
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#22c55e]/10 border border-[#22c55e]/20">
               <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
-              <span style={{ fontSize: '10px', color: '#555560' }}>Real-time sync</span>
+              <span className="text-[9px] font-black text-[#22c55e] uppercase">Active</span>
             </div>
           </div>
-          <div className="flex gap-1.5">
-            <button onClick={onGeneratePdf} className="maple-btn-icon" title="Preview Full PDF">⬈</button>
+          
+          {/* Quick Actions Card */}
+          <div className="grid grid-cols-2 gap-2">
+            <button onClick={() => setShowTemplates(true)} className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-[#18181b] border border-[#2e2e33] hover:border-[#8a3535] transition-all group">
+              <span className="text-lg group-hover:scale-110 transition-transform">❖</span>
+              <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-tighter">Templates</span>
+            </button>
+            <button onClick={shareQuote} className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-[#18181b] border border-[#2e2e33] hover:border-[#8a3535] transition-all group">
+              <span className="text-lg group-hover:scale-110 transition-transform">🔗</span>
+              <span className="text-[10px] font-bold text-[#b0b0bc] uppercase tracking-tighter">Share Link</span>
+            </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scroll" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
-          <div className="card" style={{ marginBottom: 0 }}>
-            <div className="fin-header">Financial Summary</div>
-            <div>
+        <div className="flex-1 overflow-y-auto custom-scroll p-6 space-y-8">
+          {/* Financial Summary Card */}
+          <div className="card !p-0 overflow-hidden !bg-transparent !border-none">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-widest">Financial Summary</span>
+              <span className="text-[10px] font-bold text-[#8a3535]">{money(computed.totals.grandTotal)}</span>
+            </div>
+            
+            <div className="space-y-1 bg-[#111114] rounded-2xl p-4 border border-[#1e1e23]">
               {computed.totals.lines.map(line => (
                 <div
                   key={line.key}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: line.isLast ? '12px 0 0' : '7px 0',
-                    marginTop: line.isLast ? '4px' : 0,
-                    borderBottom: line.isLast ? 'none' : '1px solid #1a1a1f',
-                    borderTop: line.isLast ? '1px solid #2e2e33' : 'none',
-                  }}
+                  className={`flex justify-between items-center py-2 ${line.isLast ? 'mt-4 pt-4 border-t border-[#8a3535]/30' : ''}`}
                 >
-                  <span style={{ 
-                    fontSize: line.isLast ? '16px' : '13px', 
-                    fontWeight: line.isLast ? 800 : 400, 
-                    color: line.isLast ? '#8a3535' : '#888896' 
-                  }}>
+                  <span className={`text-[12px] ${line.emphasis ? 'font-bold text-[#ffffff]' : 'text-[#888896]'}`}>
                     {line.label}
                   </span>
-                  <span style={{ 
-                    fontSize: line.isLast ? '16px' : '13px', 
-                    fontWeight: line.isLast ? 800 : 500, 
-                    color: line.isLast ? '#8a3535' : '#e4e4e7' 
-                  }} className="tabular-nums">
+                  <span className={`text-[12px] tabular-nums ${line.emphasis ? 'font-black text-[#8a3535]' : 'text-[#e4e4e7]'}`}>
                     {money(line.value)}
                   </span>
                 </div>
@@ -1048,19 +1060,23 @@ function QuotationBuilderContent() {
             </div>
           </div>
 
-          <div className="preview-container">
-            <div className="flex items-center justify-between mb-4">
-              <span style={{ fontSize: '11px', fontWeight: 600, color: '#555560', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Proposal Preview</span>
-              <span style={{ fontSize: '9px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', background: '#232329', color: '#555560' }}>DRAFT</span>
+          {/* Professional Review (Live Preview) */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-widest">Professional Review</span>
+              <button onClick={onGeneratePdf} className="text-[10px] font-bold text-[#8a3535] hover:underline">Full PDF ⬈</button>
             </div>
-            <div className="max-h-[500px] overflow-y-auto rounded-lg bg-white shadow-2xl relative custom-scroll ring-1 ring-black/10">
+            <div className="aspect-[3/4] overflow-hidden rounded-2xl bg-white shadow-2xl relative custom-scroll ring-1 ring-white/10 group">
               {!data.client.name ? (
-                <div className="preview-placeholder">
-                  Fill in client details to see preview
-                </div>
+                <div className="preview-placeholder">Enter Client Details</div>
               ) : (
-                <LivePreviewPanel data={data} computed={computed} terms={terms} />
+                <div className="origin-top scale-[0.65] w-[153%] h-[153%] absolute top-0 left-0">
+                  <LivePreviewPanel data={data} computed={computed} terms={terms} />
+                </div>
               )}
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                <CreativeButton onClick={onGeneratePdf} className="!rounded-full">Preview Full Proposal</CreativeButton>
+              </div>
             </div>
           </div>
         </div>
