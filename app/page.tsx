@@ -20,7 +20,7 @@ import { TEMPLATES } from "./lib/constants";
 import { MasterProposalPdf } from "./components/PdfCatalog";
 import { 
   LiveClock, InputLabel, TextInput, Select, TextArea, 
-  NumberInput, BrandStyles, CreativeButton
+  NumberInput, BrandStyles
 } from "./components/BrandUI";
 
 const LS_KEY_DRAFTS = "mapleQuotation.drafts.v1";
@@ -645,8 +645,8 @@ function QuotationBuilderContent() {
             <button type="button" onClick={() => setShowTemplates(true)} className="text-[12px] font-bold text-[#b0b0bc] hover:text-white px-3 transition-colors">Templates</button>
             <button type="button" onClick={shareQuote} className="text-[12px] font-bold text-[#b0b0bc] hover:text-white px-3 transition-colors">Share</button>
             <div className="w-[1px] h-6 bg-[#2e2e33] mx-1" />
-            <CreativeButton onClick={() => { const id = makeId(); const d: Draft = { id, name: `Draft: ${data.client.name || 'Untitled'}`, savedAt: Date.now(), data }; setDrafts([d, ...drafts]); localStorage.setItem(LS_KEY_DRAFTS, JSON.stringify([d, ...drafts])); toast("Draft saved ✓"); }} variant="secondary" className="!h-9 !px-4">Save Draft</CreativeButton>
-            <CreativeButton onClick={onGeneratePdf} className="!h-9 !px-4">Generate PDF</CreativeButton>
+            <button onClick={() => { const id = makeId(); const d: Draft = { id, name: `Draft: ${data.client.name || 'Untitled'}`, savedAt: Date.now(), data }; setDrafts([d, ...drafts]); localStorage.setItem(LS_KEY_DRAFTS, JSON.stringify([d, ...drafts])); toast("Draft saved ✓"); }} className="maple-btn-secondary !h-9 !px-4">Save Draft</button>
+            <button onClick={onGeneratePdf} className="maple-btn-primary !h-9 !px-4">Generate PDF</button>
           </div>
         </header>
 
@@ -715,7 +715,7 @@ function QuotationBuilderContent() {
                     <span className="flex items-center gap-2">📥 Import Excel</span>
                     <input type="file" className="hidden" accept=".xlsx,.xls" onChange={onImportExcel} />
                   </label>
-                  <CreativeButton onClick={addRoom}>+ Create Room</CreativeButton>
+                  <button onClick={addRoom} className="maple-btn-primary">+ Create Room</button>
                 </div>
               </div>
 
@@ -747,7 +747,7 @@ function QuotationBuilderContent() {
                           {TEMPLATES.map(t => <option key={t.label} value={t.label}>{t.label}</option>)}
                         </Select>
                       </div>
-                      <CreativeButton onClick={() => addItem(rIdx)} variant="secondary" className="!h-9 !px-4">+ Item</CreativeButton>
+                      <button onClick={() => addItem(rIdx)} className="maple-btn-secondary !h-9 !px-4">+ Item</button>
                       <button onClick={() => deleteRoom(rIdx)} className="w-9 h-9 flex items-center justify-center rounded-xl bg-[#f04747]/10 text-[#f04747] border border-[#f04747]/20 hover:bg-[#f04747] hover:text-white transition-all">✕</button>
                     </div>
                   </div>
@@ -990,7 +990,7 @@ function QuotationBuilderContent() {
                   <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#ffffff' }}>Saved Drafts</h2>
                   <p style={{ fontSize: '12px', color: '#888896', marginTop: '4px' }}>Saved locally in this browser</p>
                 </div>
-                <CreativeButton onClick={seedFullSampleData} variant="secondary" className="h-9 !px-4 text-[11px]">+ Seed Full Sample</CreativeButton>
+                <button onClick={seedFullSampleData} className="maple-btn-secondary h-9 !px-4 text-[11px]">+ Seed Full Sample</button>
               </div>
 
               {drafts.length === 0 ? (
@@ -1100,7 +1100,7 @@ function QuotationBuilderContent() {
                     <LivePreviewPanel data={data} computed={computed} terms={terms} />
                   </div>
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center backdrop-blur-[2px] gap-4">
-                    <CreativeButton onClick={onGeneratePdf} className="!rounded-full shadow-xl">Full Screen Preview</CreativeButton>
+                    <button onClick={onGeneratePdf} className="maple-btn-primary !rounded-full shadow-xl">Full Screen Preview</button>
                     <span className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Click to Expand</span>
                   </div>
                 </div>
@@ -1145,13 +1145,13 @@ function QuotationBuilderContent() {
                     </div>
                   </div>
                     <p className="text-[12px] text-[var(--text-secondary)] mb-5 leading-relaxed">Includes {temp.desc}. Perfect for quick estimates.</p>
-                  <CreativeButton onClick={() => applyTemplate(temp.type as 1 | 2 | 3)} className="w-full !rounded-xl !h-10">Apply Template</CreativeButton>
+                  <button onClick={() => applyTemplate(temp.type as 1 | 2 | 3)} className="maple-btn-primary w-full !rounded-xl !h-10">Apply Template</button>
                   </div>
                 ))}
               </div>
   
               <div className="modal-footer">
-                <CreativeButton onClick={() => setShowTemplates(false)} variant="secondary" className="h-10 !px-8 !rounded-xl">Close</CreativeButton>
+                <button onClick={() => setShowTemplates(false)} className="maple-btn-secondary h-10 !px-8 !rounded-xl">Close</button>
               </div>
           </div>
         </div>
