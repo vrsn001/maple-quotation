@@ -718,7 +718,7 @@ function QuotationBuilderContent() {
               </div>
 
               {data.rooms.map((room, rIdx) => (
-                <div key={room.id} className="card overflow-hidden" style={{ padding: 0, marginBottom: '20px' }}>
+                <div key={room.id} className="card overflow-hidden" style={{ padding: 0 }}>
                   <div className="room-header">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="w-8 h-8 rounded-full bg-[#8a3535] text-white flex items-center justify-center text-[12px] font-bold shrink-0">{rIdx + 1}</div>
@@ -1056,9 +1056,9 @@ function QuotationBuilderContent() {
               {/* Halftone Texture Overlay */}
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 0)', backgroundSize: '4px 4px' }} />
               
-              <div className="p-5 pl-5 pr-6 space-y-3.5 relative">
+              <div className="p-6 space-y-3 relative">
                 {computed.totals.lines.filter(l => !l.isLast).map(line => (
-                  <div key={line.key} className="flex justify-between items-center group/line border-b border-[#ffffff]/[0.02] pb-2 last:border-0">
+                  <div key={line.key} className="flex justify-between items-center group/line border-b border-[#ffffff]/[0.03] pb-3 last:border-0 last:pb-0">
                     <span className={`text-[12px] transition-colors ${line.emphasis ? 'font-bold text-white' : 'text-[#888896] group-hover/line:text-[#b0b0bc]'}`}>
                       {line.label}
                     </span>
@@ -1069,32 +1069,28 @@ function QuotationBuilderContent() {
                 ))}
               </div>
               
-              <div className="bg-[#8a3535] p-5 pl-5 pr-6 border-t border-[#ffffff]/10 relative overflow-hidden group/seal">
-                {/* Perforated Edge Effect */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] flex justify-between gap-1 px-1">
-                  {Array.from({ length: 20 }).map((_, i) => (
-                    <div key={i} className="w-2 h-2 rounded-full bg-[#111114] -translate-y-1/2" />
-                  ))}
+            </div>
+          </section>
+
+          {/* Grand Total */}
+          <section className="bg-[#8a3535] rounded-xl overflow-hidden relative group/seal shadow-lg shadow-[#8a3535]/10 border border-[#8a3535]/50 flex flex-col">
+            <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 0)', backgroundSize: '4px 4px' }} />
+            <div className="px-6 py-5 relative z-10">
+              <div className="flex justify-between items-end pt-1">
+                <div className="flex flex-col">
+                  <span className="text-[11px] font-black text-white uppercase tracking-[0.2em] mb-0.5">Grand Total</span>
+                  <span className="text-[8px] text-white/70 font-bold uppercase tracking-widest">Official Seal of Value</span>
                 </div>
-                
-                <div className="flex justify-between items-center relative z-10">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black text-white/90 uppercase tracking-[0.2em] mb-1">Grand Total</span>
-                    <span className="text-[9px] text-white/50 font-bold uppercase tracking-widest">Official Seal of Value</span>
-                  </div>
-                  <div className="text-right flex-1 flex justify-end">
-                    <div className="text-[24px] font-black text-white tabular-nums tracking-tighter drop-shadow-lg">
-                      {money(computed.totals.grandTotal)}
-                    </div>
-                  </div>
+                <div className="text-[26px] leading-none font-black text-white tabular-nums tracking-tighter drop-shadow-md">
+                  {money(computed.totals.grandTotal)}
                 </div>
-                
-                {/* Subtle Barcode */}
-                <div className="flex gap-[1px] mt-4 opacity-20 group-hover/seal:opacity-40 transition-opacity">
-                  {Array.from({ length: 40 }).map((_, i) => (
-                    <div key={i} style={{ width: Math.random() > 0.5 ? '1px' : '2px', height: '12px' }} className="bg-white" />
-                  ))}
-                </div>
+              </div>
+              
+              {/* Subtle Barcode */}
+              <div className="flex gap-[2px] mt-5 opacity-30 group-hover/seal:opacity-60 transition-opacity mix-blend-overlay">
+                {Array.from({ length: 40 }).map((_, i) => (
+                  <div key={i} style={{ width: Math.random() > 0.5 ? '1px' : '2px', height: '10px' }} className="bg-white rounded-full" />
+                ))}
               </div>
             </div>
           </section>
@@ -1107,23 +1103,23 @@ function QuotationBuilderContent() {
             </div>
             
             <div className="p-4 relative group">
-              <div className="aspect-[3/4.2] overflow-hidden rounded-lg bg-white shadow-2xl relative ring-1 ring-white/10 group-hover:ring-[#8a3535]/50 transition-all duration-500">
-                {!data.client.name ? (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#f8f9fa] p-8 text-center">
-                    <div className="text-3xl mb-4 opacity-20">👤</div>
-                    <div className="text-[13px] font-bold text-[#1a1a1a] mb-2">Missing Client Data</div>
-                    <p className="text-[11px] text-[#7d6e63] leading-relaxed">Fill in the overview section to generate the professional proposal preview.</p>
-                  </div>
-                ) : (
+              {!data.client.name ? (
+                <div className="rounded-lg bg-[#0d0d0f] border border-[#1e1e23] p-8 text-center flex flex-col items-center justify-center min-h-[240px]">
+                  <div className="text-3xl mb-3 opacity-30">📄</div>
+                  <div className="text-[13px] font-bold text-[#ffffff] mb-1.5 tracking-wide">Missing Client Data</div>
+                  <p className="text-[11px] text-[#7c7c8e] leading-relaxed max-w-[200px]">Fill in the overview section to generate the professional proposal preview.</p>
+                </div>
+              ) : (
+                <div className="aspect-[3/4.2] overflow-hidden rounded-lg bg-white shadow-2xl relative ring-1 ring-white/10 group-hover:ring-[#8a3535]/50 transition-all duration-500">
                   <div className="origin-top scale-[0.65] w-[153.8%] h-[153.8%] absolute top-0 left-0">
                     <LivePreviewPanel data={data} computed={computed} terms={terms} />
                   </div>
-                )}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center backdrop-blur-[2px] gap-4">
-                  <CreativeButton onClick={onGeneratePdf} className="!rounded-full shadow-xl">Full Screen Preview</CreativeButton>
-                  <span className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Click to Expand</span>
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center backdrop-blur-[2px] gap-4">
+                    <CreativeButton onClick={onGeneratePdf} className="!rounded-full shadow-xl">Full Screen Preview</CreativeButton>
+                    <span className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Click to Expand</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </section>
         </div>

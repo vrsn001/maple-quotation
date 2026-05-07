@@ -134,7 +134,6 @@ export const BrandStyles = `
     border: 1px solid #2e2e33;
     border-radius: 16px;
     padding: 28px;
-    margin-bottom: 20px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.4);
     position: relative;
     overflow: hidden;
