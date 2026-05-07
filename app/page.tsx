@@ -585,8 +585,8 @@ function QuotationBuilderContent() {
           </div>
           {[
             { id: "client", label: "Overview", icon: "▤" },
-            { id: "rooms", label: "Inventory", icon: "❖" },
-            { id: "finance", label: "Commercials", icon: "±" },
+            { id: "rooms", label: "Rooms & Items", icon: "❖" },
+            { id: "finance", label: "Finance & T&C", icon: "±" },
             { id: "payment", label: "Settlement", icon: "💳" },
             { id: "drafts", label: "Archives", icon: "📂" },
           ].map((item) => (
@@ -594,9 +594,9 @@ function QuotationBuilderContent() {
               type="button"
               key={item.id}
               onClick={() => selectTab(item.id as typeof activeTab)}
-              className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
+              className={`maple-nav-item ${activeTab === item.id ? 'active' : ''}`}
             >
-              <span className="icon">{item.icon}</span>
+              <span className="nav-item-icon">{item.icon}</span>
               <span className="text-[12px] font-bold">{item.label}</span>
             </button>
           ))}
@@ -629,13 +629,11 @@ function QuotationBuilderContent() {
         <header className="topbar">
           <div className="flex items-center gap-3 mr-auto">
             <div className="flex flex-col bg-[#18181b] px-3 py-1 rounded-lg border border-[#2e2e33]">
-              <span className="text-[8px] font-black text-[#555560] uppercase tracking-widest">Document №</span>
               <span className="text-[11px] font-bold text-[#ffffff]">{data.quote.number}</span>
             </div>
             <div className="w-[1px] h-4 bg-[#2e2e33]" />
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#22c55e]/5 border border-[#22c55e]/20">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
-              <span className="text-[10px] font-bold text-[#22c55e] uppercase tracking-wider">Live Editing</span>
+            <div className="maple-badge-live">
+              Live Editing
             </div>
           </div>
 
@@ -659,8 +657,10 @@ function QuotationBuilderContent() {
           
           {activeTab === "client" && (
             <div className="max-w-4xl space-y-6 animate-slide-up">
-              <div className="card">
-                <h2 className="section-heading">Client Information</h2>
+              <div className="mpl-card">
+                <div className="mpl-card-header">
+                  <span className="mpl-card-title">Client Information</span>
+                </div>
                 <div className="grid grid-cols-2 gap-5">
                   <InputLabel label="Client Full Name">
                     <TextInput value={data.client.name} onChange={(e) => updateData(p => ({ ...p, client: { ...p.client, name: e.target.value }}))} placeholder="e.g. Vimal Gupta" />
@@ -676,8 +676,10 @@ function QuotationBuilderContent() {
                 </div>
               </div>
 
-              <div className="card">
-                <h2 className="section-heading">Proposal Configuration</h2>
+              <div className="mpl-card">
+                <div className="mpl-card-header">
+                  <span className="mpl-card-title">Proposal Configuration</span>
+                </div>
                 <div className="grid grid-cols-2 gap-5">
                   <InputLabel label="Quote Identifier">
                     <TextInput value={data.quote.number} onChange={(e) => updateData(p => ({ ...p, quote: { ...p.quote, number: e.target.value }}))} />
@@ -718,7 +720,7 @@ function QuotationBuilderContent() {
               </div>
 
               {data.rooms.map((room, rIdx) => (
-                <div key={room.id} className="card overflow-hidden" style={{ padding: 0 }}>
+                <div key={room.id} className="mpl-card overflow-hidden" style={{ padding: 0 }}>
                   <div className="room-header">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="w-8 h-8 rounded-full bg-[#8a3535] text-white flex items-center justify-center text-[12px] font-bold shrink-0">{rIdx + 1}</div>
@@ -886,8 +888,10 @@ function QuotationBuilderContent() {
 
           {activeTab === "finance" && (
             <div className="max-w-3xl space-y-6 animate-slide-up">
-              <div className="card">
-                <h2 className="section-heading">Financial Adjustments</h2>
+              <div className="mpl-card">
+                <div className="mpl-card-header">
+                  <span className="mpl-card-title">Financial Adjustments</span>
+                </div>
                 <div className="grid grid-cols-2 gap-5">
                   <InputLabel label="Global Discount">
                     <div className="flex gap-2">
@@ -929,8 +933,10 @@ function QuotationBuilderContent() {
                 </div>
               </div>
 
-              <div className="card">
-                <h2 className="section-heading">Terms & Conditions</h2>
+              <div className="mpl-card">
+                <div className="mpl-card-header">
+                  <span className="mpl-card-title">Terms & Conditions</span>
+                </div>
                 <div className="space-y-4">
                   {terms.map((t, i) => (
                     <div key={i} className="flex gap-4 group items-start">
@@ -939,7 +945,7 @@ function QuotationBuilderContent() {
                       </div>
                       <TextArea 
                         value={t} 
-                        style={{ height: '44px', minHeight: '44px', maxHeight: '44px', padding: '12px 14px', overflowY: 'hidden', resize: 'none', fontSize: '13px', lineHeight: '1.4' }}
+                        style={{ height: '40px', minHeight: '40px', resize: 'none', overflowY: 'hidden', fontSize: '13px', lineHeight: '1.4' }}
                         onChange={(e) => {
                           const n = [...terms]; n[i] = e.target.value; setTerms(n);
                         }} 
@@ -957,8 +963,10 @@ function QuotationBuilderContent() {
 
           {activeTab === "payment" && (
             <div className="max-w-2xl animate-slide-up">
-              <div className="card">
-                <h2 className="section-heading">Settlement Accounts</h2>
+              <div className="mpl-card">
+                <div className="mpl-card-header">
+                  <span className="mpl-card-title">Settlement Accounts</span>
+                </div>
                 <div className="space-y-6">
                   <InputLabel label="Digital Payments (UPI ID / VPA)">
                     <TextInput value={data.payment.upiId} onChange={(e) => updateData(p => ({ ...p, payment: { ...p.payment, upiId: e.target.value }}))} placeholder="e.g. maplefurnishers@axis" />
@@ -1023,12 +1031,7 @@ function QuotationBuilderContent() {
         <div className="p-6 border-b border-[#1e1e23] bg-[#09090b]/80 backdrop-blur-xl sticky top-0 z-10">
           <div className="flex items-center justify-between mb-5">
             <div className="flex flex-col">
-              <h3 className="text-[14px] font-black text-white uppercase tracking-[0.2em] font-serif">Command Center</h3>
-              <span className="text-[9px] text-[#555560] font-bold mt-1 uppercase tracking-widest">Global Action Hub</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#22c55e]/5 border border-[#22c55e]/20">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
-              <span className="text-[9px] font-black text-[#22c55e] uppercase tracking-tighter">Live Sync</span>
+              <h3 className="text-[14px] font-semibold text-white font-sans">Summary & Preview</h3>
             </div>
           </div>
           
@@ -1049,7 +1052,6 @@ function QuotationBuilderContent() {
           <section className="bg-[#111114] rounded-xl overflow-hidden border border-[#1e1e23] flex flex-col">
             <div className="bg-[#18181b] p-4 px-5 border-b border-[#1e1e23] flex justify-between items-center">
               <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Financial Summary</span>
-              <span className="text-[9px] font-bold text-[#555560] uppercase tracking-tighter">SEC: {data.rooms.length} Units</span>
             </div>
             
             <div className="relative">
@@ -1073,41 +1075,24 @@ function QuotationBuilderContent() {
           </section>
 
           {/* Grand Total */}
-          <section className="bg-[#8a3535] rounded-xl overflow-hidden relative group/seal shadow-lg shadow-[#8a3535]/10 border border-[#8a3535]/50 flex flex-col">
-            <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 0)', backgroundSize: '4px 4px' }} />
-            <div className="px-6 py-5 relative z-10">
-              <div className="flex justify-between items-end pt-1">
-                <div className="flex flex-col">
-                  <span className="text-[11px] font-black text-white uppercase tracking-[0.2em] mb-0.5">Grand Total</span>
-                  <span className="text-[8px] text-white/70 font-bold uppercase tracking-widest">Official Seal of Value</span>
-                </div>
-                <div className="text-[26px] leading-none font-black text-white tabular-nums tracking-tighter drop-shadow-md">
-                  {money(computed.totals.grandTotal)}
-                </div>
-              </div>
-              
-              {/* Subtle Barcode */}
-              <div className="flex gap-[2px] mt-5 opacity-30 group-hover/seal:opacity-60 transition-opacity mix-blend-overlay">
-                {Array.from({ length: 40 }).map((_, i) => (
-                  <div key={i} style={{ width: Math.random() > 0.5 ? '1px' : '2px', height: '10px' }} className="bg-white rounded-full" />
-                ))}
-              </div>
+          <section className="mt-4" style={{ background: 'transparent', borderTop: '1px solid var(--border-base)', paddingTop: '14px' }}>
+            <div className="flex justify-between items-center px-6">
+              <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'Inter' }}>Grand Total</span>
+              <span style={{ fontSize: '20px', fontWeight: 800, color: 'var(--maple)' }}>{money(computed.totals.grandTotal)}</span>
             </div>
           </section>
 
-          {/* Professional Review */}
+          {/* Proposal Preview */}
           <section className="bg-[#111114] rounded-xl overflow-hidden border border-[#1e1e23] flex flex-col">
             <div className="bg-[#18181b] p-4 px-5 border-b border-[#1e1e23] flex justify-between items-center">
-              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Professional Review</span>
-              <button onClick={onGeneratePdf} className="text-[9px] font-black text-[#8a3535] uppercase tracking-widest hover:underline transition-base">Popout PDF ⬈</button>
+              <span className="text-[11px] font-bold text-[#7c7c8e] uppercase tracking-[0.15em]">Proposal Preview</span>
+              <button onClick={onGeneratePdf} className="text-[9px] font-bold text-[#8a3535] uppercase tracking-wider hover:underline transition-base">Export PDF ⬈</button>
             </div>
             
             <div className="p-4 relative group">
               {!data.client.name ? (
                 <div className="rounded-lg bg-[#0d0d0f] border border-[#1e1e23] p-8 text-center flex flex-col items-center justify-center min-h-[240px]">
-                  <div className="text-3xl mb-3 opacity-30">📄</div>
-                  <div className="text-[13px] font-bold text-[#ffffff] mb-1.5 tracking-wide">Missing Client Data</div>
-                  <p className="text-[11px] text-[#7c7c8e] leading-relaxed max-w-[200px]">Fill in the overview section to generate the professional proposal preview.</p>
+                  <p className="text-[12px] text-[#7c7c8e] leading-relaxed max-w-[200px]">Fill in client details to see preview</p>
                 </div>
               ) : (
                 <div className="aspect-[3/4.2] overflow-hidden rounded-lg bg-white shadow-2xl relative ring-1 ring-white/10 group-hover:ring-[#8a3535]/50 transition-all duration-500">
@@ -1149,7 +1134,7 @@ function QuotationBuilderContent() {
                 { type: 2, title: "Full Home Renovation", desc: "Living, Master Bedroom, Modular Kitchen, Bathroom", items: 12, icon: "🏠" },
                 { type: 3, title: "Master Bedroom Set", desc: "King Size Bed, 4-Door Wardrobe, Pair of Side Tables", items: 3, icon: "🛏️" }
               ].map((temp) => (
-                <div key={temp.type} className="card p-5 bg-[var(--bg-elevated)]/40 hover:border-[var(--accent)] transition-base group">
+                <div key={temp.type} className="mpl-card p-5 bg-[var(--bg-elevated)]/40 hover:border-[var(--accent)] transition-base group">
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-[var(--bg-elevated)] flex items-center justify-center text-xl group-hover:scale-110 transition-base">{temp.icon}</div>
