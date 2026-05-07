@@ -45,53 +45,53 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
           <p className="text-[11px] font-medium max-w-[220px]">Fill in client details to see preview</p>
         </div>
       ) : (
-        <div style={{ background: 'white', color: '#111', padding: '24px', minHeight: '100%', fontSize: '11px', lineHeight: '1.6' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #8a3535', paddingBottom: '12px', marginBottom: '16px' }}>
-            <div style={{ fontWeight: 700, fontSize: '14px', color: '#8a3535' }}>MAPLE FURNISHERS</div>
-            <div style={{ fontSize: '9px', color: '#666', textAlign: 'right' }}>
+        <div style={{ background: 'white', color: '#000', padding: '24px', minHeight: '100%', fontSize: '11px', lineHeight: '1.6', border: '2px solid #000' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '4px solid #000', paddingBottom: '16px', marginBottom: '16px' }}>
+            <div style={{ fontWeight: 900, fontSize: '16px', color: '#000', letterSpacing: '-0.02em' }}>MAPLE FURNISHERS</div>
+            <div style={{ fontSize: '9px', color: '#000', textAlign: 'right', fontWeight: 600 }}>
               <div>B-3, W.H.S. Timber Market Kriti Nagar</div>
               <div>Delhi-110015</div>
               <div>9262968727</div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px', background: '#fafafa', padding: '10px', borderRadius: '4px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px', border: '2px solid #000', padding: '12px' }}>
             <div>
-              <div style={{ fontSize: '8px', color: '#999', textTransform: 'uppercase', marginBottom: '4px' }}>Prepared For</div>
-              <div style={{ fontWeight: 700 }}>{data.client.name || '—'}</div>
-              <div style={{ color: '#666' }}>{data.client.phone}</div>
+              <div style={{ fontSize: '9px', color: '#000', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 800 }}>Prepared For</div>
+              <div style={{ fontWeight: 800, fontSize: '14px' }}>{data.client.name || '—'}</div>
+              <div style={{ color: '#000', fontWeight: 600 }}>{data.client.phone}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '9px', color: '#999', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Ref No.</div>
-              <div style={{ fontWeight: 800, fontSize: '12px' }}>{data.quote.number}</div>
-              <div style={{ color: '#666', fontSize: '10px', marginTop: '2px' }}>{data.quote.date}</div>
+              <div style={{ fontSize: '9px', color: '#000', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 800 }}>Ref No.</div>
+              <div style={{ fontWeight: 800, fontSize: '14px' }}>{data.quote.number}</div>
+              <div style={{ color: '#000', fontSize: '10px', marginTop: '2px', fontWeight: 600 }}>{data.quote.date}</div>
             </div>
           </div>
 
           {data.rooms.map((room) => (
-            <div key={room.id} style={{ marginBottom: '16px' }}>
-              <div style={{ background: '#8a3535', color: 'white', padding: '6px 10px', fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', borderRadius: '3px', marginBottom: '8px' }}>
+            <div key={room.id} style={{ marginBottom: '24px' }}>
+              <div style={{ background: '#000', color: 'white', padding: '8px 12px', fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>
                 {room.name || 'Room'} — {room.items.length} items
               </div>
               {room.items.map((item) => {
                 const total = (item.price || 0) * (item.unitValue || 1) * (item.quantity || 1);
                 return (
-                  <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid #eee' }}>
+                  <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '2px solid #000' }}>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 600 }}>{item.category || 'Item'}</div>
-                      <div style={{ color: '#666', fontSize: '9px' }}>{item.description}</div>
-                      <div style={{ color: '#999', fontSize: '8px' }}>Qty: {item.quantity} × ₹{item.price?.toLocaleString()}</div>
+                      <div style={{ fontWeight: 800, fontSize: '12px', color: '#000' }}>{item.category || 'Item'}</div>
+                      <div style={{ color: '#000', fontSize: '10px', fontWeight: 600, marginTop: '2px' }}>{item.description}</div>
+                      <div style={{ color: '#000', fontSize: '9px', fontWeight: 800, marginTop: '4px' }}>QTY: {item.quantity} × ₹{item.price?.toLocaleString()}</div>
                     </div>
-                    <div style={{ fontWeight: 800, color: '#8a3535', fontSize: '13px' }}>₹{total.toLocaleString()}</div>
+                    <div style={{ fontWeight: 900, color: '#000', fontSize: '14px' }}>₹{total.toLocaleString()}</div>
                   </div>
                 );
               })}
             </div>
           ))}
 
-          <div style={{ marginTop: '16px', borderTop: '1px solid #ddd', paddingTop: '12px' }}>
+          <div style={{ marginTop: '24px', borderTop: '4px solid #000', paddingTop: '16px' }}>
             {computed.totals.lines.map((line) => (
-              <div key={line.key} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontWeight: line.emphasis ? 700 : 400, color: line.emphasis ? '#8a3535' : '#333', fontSize: line.emphasis ? '12px' : '9px' }}>
+              <div key={line.key} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontWeight: line.emphasis ? 900 : 700, color: '#000', fontSize: line.emphasis ? '14px' : '11px', textTransform: 'uppercase' }}>
                 <span>{line.label}</span>
                 <span>₹{line.value?.toLocaleString()}</span>
               </div>
@@ -99,9 +99,9 @@ function LivePreviewPanel({ data, computed, terms }: { data: QuoteData; computed
           </div>
 
           {terms.length > 0 && (
-            <div style={{ marginTop: '20px', padding: '12px', background: '#f8f8f8', borderRadius: '6px', border: '1px solid #eee' }}>
-              <div style={{ fontWeight: 800, fontSize: '10px', textTransform: 'uppercase', marginBottom: '8px', color: '#8a3535', letterSpacing: '0.05em' }}>Terms & Conditions</div>
-              {terms.map((t, i) => <div key={i} style={{ fontSize: '9px', color: '#444', marginBottom: '5px', lineHeight: '1.4' }}>{i + 1}. {t}</div>)}
+            <div style={{ marginTop: '32px', padding: '16px', border: '2px solid #000' }}>
+              <div style={{ fontWeight: 900, fontSize: '11px', textTransform: 'uppercase', marginBottom: '12px', color: '#000', letterSpacing: '0.05em', borderBottom: '2px solid #000', paddingBottom: '8px' }}>Terms & Conditions</div>
+              {terms.map((t, i) => <div key={i} style={{ fontSize: '10px', color: '#000', marginBottom: '6px', lineHeight: '1.5', fontWeight: 600 }}>{i + 1}. {t}</div>)}
             </div>
           )}
         </div>
@@ -808,22 +808,22 @@ function QuotationBuilderContent() {
                               </div>
                             </td>
                              <td>
-                                <div className="space-y-4 pr-6 min-w-[200px]">
-                                  <div className="grid grid-cols-2 gap-2">
-                                    <div className="space-y-1">
-                                      <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Material</span>
-                                      <TextInput placeholder="Material..." className="!h-8 !text-[11px]" value={item.material} onChange={(e) => updateItem(rIdx, iIdx, { material: e.target.value })} />
+                                <div className="space-y-4 pr-6 min-w-[240px]">
+                                  <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                      <span className="text-[10px] font-black text-white uppercase tracking-widest block">Material</span>
+                                      <TextInput placeholder="Material..." className="!h-10 !text-[12px] !border-2 !border-[#3f3f4a]" value={item.material} onChange={(e) => updateItem(rIdx, iIdx, { material: e.target.value })} />
                                     </div>
-                                    <div className="space-y-1">
-                                      <span className="text-[9px] font-bold text-[#7c7c8e] uppercase ml-1">Fabric</span>
-                                      <TextInput placeholder="Fabric..." className="!h-8 !text-[11px]" value={item.fabric} onChange={(e) => updateItem(rIdx, iIdx, { fabric: e.target.value })} />
+                                    <div className="space-y-2">
+                                      <span className="text-[10px] font-black text-white uppercase tracking-widest block">Fabric</span>
+                                      <TextInput placeholder="Fabric..." className="!h-10 !text-[12px] !border-2 !border-[#3f3f4a]" value={item.fabric} onChange={(e) => updateItem(rIdx, iIdx, { fabric: e.target.value })} />
                                     </div>
                                   </div>
-                                  <div className="flex items-center gap-3 bg-[#18181b] p-2 rounded-lg border border-[#2e2e33]">
-                                    <span className="text-[9px] font-bold text-[#7c7c8e] uppercase whitespace-nowrap">Size (L×W×H)</span>
-                                    <div className="flex gap-1 flex-1">
+                                  <div className="space-y-2">
+                                    <span className="text-[10px] font-black text-white uppercase tracking-widest block">Dimensions (L × W × H)</span>
+                                    <div className="grid grid-cols-3 gap-2">
                                       {(['l', 'w', 'h'] as Array<keyof NonNullable<QuoteItem['dimensions']>>).map(d => (
-                                        <NumberInput key={d} placeholder={d.toUpperCase()} className="!h-7 !text-[10px] !px-1 text-center flex-1 !bg-[#0d0d0f]" value={item.dimensions?.[d]} onChange={(e) => updateItem(rIdx, iIdx, { dimensions: { ...item.dimensions!, [d]: toNumber(e.target.value) } })} />
+                                        <NumberInput key={d} placeholder={d.toUpperCase()} className="!h-10 !text-[12px] !border-2 !border-[#3f3f4a] !px-2 text-center !bg-transparent" value={item.dimensions?.[d]} onChange={(e) => updateItem(rIdx, iIdx, { dimensions: { ...item.dimensions!, [d]: toNumber(e.target.value) } })} />
                                       ))}
                                     </div>
                                   </div>

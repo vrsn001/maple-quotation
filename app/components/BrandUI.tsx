@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from "react";
 
-// ── BRAND STYLES ─────────────────────────────────────────────────────────────
-// This file controls all UI component styling for Maple Quotation Platform.
-// Accent color: Maple Maroon #632a2a
-// DO NOT add gold/yellow. DO NOT add serif fonts to UI components.
+// ── BRAND STYLES (BRUTALIST EDITION) ─────────────────────────────────────────
+// Brutalist aesthetic: sharp corners (0px radius), thick borders, hard offset shadows,
+// stark contrasts, and raw interactions. No soft blurs or gentle curves.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const BrandStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
 
   :root {
     --bg-page:        #0c0c0e;
     --bg-surface:     #18181b;
     --bg-elevated:    #232329;
-    --bg-input:       #1e1e23;
+    --bg-input:       #0c0c0e;
     --border-subtle:  #1f1f25;
-    --border-base:    #2e2e36;
-    --border-strong:  #3f3f4a;
-    --text-primary:   #f4f4f5;
+    --border-base:    #3f3f4a;
+    --border-strong:  #f4f4f5;
+    --text-primary:   #ffffff;
     --text-secondary: #a1a1aa;
     --text-muted:     #71717a;
     --text-faint:     #52525b;
-    --maple:          #632a2a;
-    --maple-hover:    #7a3333;
+    --maple:          #8a3535;
+    --maple-hover:    #a34040;
     --maple-deep:     #4a1f1f;
-    --maple-glow:     rgba(99,42,42,0.15);
-    --maple-tint:     rgba(99,42,42,0.08);
     --green:          #22c55e;
-    --green-tint:     rgba(34,197,94,0.08);
+    
+    /* Brutalist Tokens */
+    --brutal-border:  2px solid var(--border-base);
+    --brutal-shadow:  4px 4px 0px #000000;
+    --brutal-shadow-sm: 2px 2px 0px #000000;
   }
 
   * { box-sizing: border-box; }
@@ -41,19 +42,20 @@ export const BrandStyles = `
     -webkit-font-smoothing: antialiased;
   }
 
-  ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border-base); border-radius: 99px; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-page); border-left: var(--brutal-border); }
+  ::-webkit-scrollbar-thumb { background: var(--border-base); border: 1px solid #000; }
   ::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
 
   /* Cards */
   .mpl-card {
     background: var(--bg-surface);
-    border: 1px solid var(--border-base);
-    border-radius: 16px;
+    border: var(--brutal-border);
+    border-radius: 0px;
     padding: 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    margin-bottom: 16px;
+    box-shadow: var(--brutal-shadow);
+    margin-bottom: 24px;
+    transition: transform 0.1s, box-shadow 0.1s;
   }
 
   .mpl-card-header {
@@ -62,37 +64,39 @@ export const BrandStyles = `
     justify-content: space-between;
     padding-bottom: 16px;
     margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 2px solid #000;
   }
 
   .mpl-card-title {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
     color: var(--text-primary);
-    font-family: 'Inter', system-ui, sans-serif;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.05em;
   }
 
   /* Inputs */
   .maple-input {
     width: 100%;
-    height: 42px;
+    height: 44px;
     padding: 0 14px;
     background: var(--bg-input);
-    border: 1.5px solid var(--border-base);
-    border-radius: 10px;
+    border: 2px solid var(--border-base);
+    border-radius: 0px;
     color: var(--text-primary);
     font-size: 14px;
+    font-weight: 600;
     font-family: 'Inter', system-ui, sans-serif;
     outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color 0.1s, box-shadow 0.1s;
   }
 
-  .maple-input::placeholder { color: var(--text-faint); }
-  .maple-input:hover { border-color: var(--border-strong); }
+  .maple-input::placeholder { color: var(--text-faint); font-weight: 400; }
+  .maple-input:hover { border-color: var(--text-secondary); }
   .maple-input:focus {
-    border-color: var(--maple);
-    box-shadow: 0 0 0 3px var(--maple-glow);
+    border-color: var(--text-primary);
+    box-shadow: var(--brutal-shadow-sm);
+    background: var(--bg-surface);
   }
 
   textarea.maple-input {
@@ -103,52 +107,74 @@ export const BrandStyles = `
     line-height: 1.5;
   }
 
-  select.maple-input { cursor: pointer; }
+  select.maple-input { 
+    cursor: pointer; 
+    appearance: none;
+    border-radius: 0px;
+  }
 
   /* Buttons */
   .maple-btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    height: 36px;
-    padding: 0 18px;
+    gap: 8px;
+    height: 40px;
+    padding: 0 20px;
     background: var(--maple);
     color: #ffffff;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     font-family: 'Inter', system-ui, sans-serif;
-    border: none;
-    border-radius: 8px;
+    border: 2px solid #000;
+    border-radius: 0px;
+    box-shadow: var(--brutal-shadow);
     cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
+    transition: transform 0.1s, box-shadow 0.1s;
     white-space: nowrap;
   }
-  .maple-btn-primary:hover { background: var(--maple-hover); }
-  .maple-btn-primary:active { transform: scale(0.98); }
+  .maple-btn-primary:hover { 
+    background: var(--maple-hover); 
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #000;
+  }
+  .maple-btn-primary:active { 
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+  }
 
   .maple-btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    height: 36px;
+    gap: 8px;
+    height: 40px;
     padding: 0 16px;
-    background: transparent;
-    color: var(--text-secondary);
+    background: var(--bg-surface);
+    color: var(--text-primary);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     font-family: 'Inter', system-ui, sans-serif;
-    border: 1px solid var(--border-base);
-    border-radius: 8px;
+    border: 2px solid var(--text-muted);
+    border-radius: 0px;
+    box-shadow: var(--brutal-shadow-sm);
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.1s;
     white-space: nowrap;
   }
   .maple-btn-secondary:hover {
     background: var(--bg-elevated);
-    color: var(--text-primary);
-    border-color: var(--border-strong);
+    border-color: var(--text-primary);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000;
+  }
+  .maple-btn-secondary:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000;
   }
 
   .maple-btn-ghost {
@@ -161,24 +187,29 @@ export const BrandStyles = `
     background: transparent;
     color: var(--text-muted);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
+    text-transform: uppercase;
     font-family: 'Inter', system-ui, sans-serif;
-    border: none;
-    border-radius: 6px;
+    border: 2px solid transparent;
+    border-radius: 0px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.1s;
   }
-  .maple-btn-ghost:hover { color: var(--text-primary); background: var(--bg-elevated); }
+  .maple-btn-ghost:hover { 
+    color: var(--text-primary); 
+    border-color: var(--text-muted);
+    background: var(--bg-elevated); 
+  }
 
   /* Labels */
   .maple-label {
     display: block;
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: var(--text-muted);
-    margin-bottom: 7px;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
     font-family: 'Inter', system-ui, sans-serif;
   }
 
@@ -186,7 +217,7 @@ export const BrandStyles = `
   .maple-grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 24px;
   }
 
   .maple-grid-2 .maple-full { grid-column: 1 / -1; }
@@ -195,55 +226,59 @@ export const BrandStyles = `
   .maple-nav-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
-    height: 38px;
-    padding: 0 12px;
-    border-radius: 6px;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 0px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--text-muted);
     background: transparent;
-    border: none;
+    border: 2px solid transparent;
     cursor: pointer;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     text-align: left;
     font-family: 'Inter', system-ui, sans-serif;
     transition: all 0.1s;
   }
-  .maple-nav-item:hover { background: #1a1a1f; color: var(--text-primary); }
+  .maple-nav-item:hover { 
+    background: var(--bg-elevated); 
+    color: var(--text-primary); 
+    border-color: var(--border-base);
+  }
   .maple-nav-item.active {
-    background: var(--maple-tint);
-    color: #c97a7a;
-    border-left: 2px solid var(--maple);
-    padding-left: 10px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 2px solid var(--text-primary);
+    box-shadow: 4px 4px 0px var(--maple);
+    transform: translate(-2px, -2px);
+    margin-bottom: 8px;
   }
 
   /* Badges */
   .maple-badge-live {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 3px 10px;
-    border-radius: 99px;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 0px;
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    background: var(--green-tint);
-    border: 1px solid rgba(34,197,94,0.2);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: #000;
+    border: 2px solid var(--green);
     color: var(--green);
+    box-shadow: 2px 2px 0px var(--green);
   }
   .maple-badge-live::before {
     content: '';
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+    width: 6px;
+    height: 6px;
     background: var(--green);
-    animation: mplPulse 2s infinite;
-  }
-  @keyframes mplPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
   }
 
   /* Toast */
@@ -254,40 +289,36 @@ export const BrandStyles = `
     z-index: 9999;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     pointer-events: none;
   }
   .maple-toast {
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 0px;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
     font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-base);
+    background: #000;
+    border: 2px solid var(--text-primary);
     color: var(--text-primary);
     pointer-events: all;
-    animation: mplSlideIn 0.2s ease;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    box-shadow: var(--brutal-shadow);
   }
-  .maple-toast.success { border-color: var(--maple); color: #e88888; }
-  .maple-toast.error { border-color: #ef4444; color: #f87171; }
-  .maple-toast.info { border-color: var(--border-strong); }
-  @keyframes mplSlideIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
+  .maple-toast.success { border-color: var(--green); color: var(--green); }
+  .maple-toast.error { border-color: #ef4444; color: #ef4444; }
+  
   /* Shortcut key */
   .maple-key {
     display: inline-flex;
     align-items: center;
-    padding: 1px 7px;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-base);
-    border-radius: 4px;
+    padding: 2px 8px;
+    background: #000;
+    border: 2px solid var(--border-base);
+    border-radius: 0px;
     font-size: 10px;
-    color: var(--text-muted);
+    font-weight: 800;
+    color: var(--text-primary);
     font-family: 'SF Mono', 'Fira Code', monospace;
   }
 `;
@@ -310,9 +341,11 @@ export const LiveClock = () => {
   return (
     <span style={{
       fontSize: '11px',
-      color: 'var(--text-faint)',
+      fontWeight: 800,
+      color: 'var(--text-secondary)',
       fontVariantNumeric: 'tabular-nums',
-      fontFamily: "'SF Mono', 'Fira Code', monospace"
+      fontFamily: "'SF Mono', 'Fira Code', monospace",
+      letterSpacing: '0.05em'
     }}>
       {time}
     </span>
@@ -329,7 +362,7 @@ export const InputLabel = ({
   children: React.ReactNode;
   className?: string;
 }) => (
-  <div className={`flex flex-col ${className}`} style={{ gap: '6px' }}>
+  <div className={`flex flex-col ${className}`} style={{ gap: '8px' }}>
     <label className="maple-label">{label}</label>
     {children}
   </div>
